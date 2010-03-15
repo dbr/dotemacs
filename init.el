@@ -12,6 +12,12 @@
 (scroll-bar-mode 0)
 (display-battery-mode 1)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Sensible tab settings
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load paths
 (add-to-list 'load-path "~/.emacs.d/lib/")
