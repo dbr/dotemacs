@@ -10,8 +10,7 @@
 ;; UI stuff
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
-(display-battery-mode 1)
-
+(display-battery-mode 0)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sensible tab settings
@@ -22,22 +21,25 @@
 ;; Load paths
 (add-to-list 'load-path "~/.emacs.d/lib/")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Paredit
+(require 'ibuffer-git) ;; http://jrockway.github.com/ibuffer-git/
+(require 'magit) ;; http://zagadka.vm.bytemark.co.uk/magit/
+(require 'textmate) ;; http://github.com/defunkt/textmate.el
 (require 'paredit)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; textmate.el
-(require 'textmate)
-(textmate-mode)
+
+(ido-mode 1) ;; C-x b and C-x C-f etc to use shiner minibuf
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; C-x b and C-x C-f etc to use shiner minibuf
-(ido-mode 1)
+;; Start textmate-mode for Python
+(add-hook 'python-mode-hook
+'(lambda ()
+	(interactive)
+	(textmate-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ignore .DS_Store files in ido file select etc
+;; Ignore .DS_Store *.pyc files in ido file select etc
 (add-to-list 'ido-ignore-files "\\.DS_Store")
+(add-to-list 'ido-ignore-files "\\.pyc")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; recent files
@@ -45,26 +47,11 @@
 (setq recentf-auto-cleanup 'never) ; http://stackoverflow.com/questions/880625
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
-(global-set-key "\C-x\ r" 'recentf-open-files)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Use C-c C-c to exit emacsclient
-(add-hook 'gnuservserve-visit-hook '(lambda ()
-				 (local-set-key [(control c) (control c)]
-						(lambda ()
-						  (interactive)
-						  (save-buffer)
-						  (server-edit)))))
-
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bind M-space to completion
-(global-set-key "\M- " 'hippie-expand)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Bind C-x C-b to buffer menu (as it auto-selects, unlist buffer list)
-;; http://stackoverflow.com/questions/1231188/emacs-list-buffers-behavior
-(global-set-key "\C-x\C-b" 'buffer-menu)
+; (global-set-key "\M- " 'hippie-expand)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window resizing shortcuts
@@ -203,19 +190,26 @@ it)"
       (message file)
       (delete-file file))))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; http://www.emacswiki.org/emacs/EshellFunctions
-(defun eshell/emacs (&rest args)
-  "Open a file in emacs. Some habits die hard."
-  (if (null args)
-      ;; If I just ran "emacs", I probably expect to be launching
-      ;; Emacs, which is rather silly since I'm already in Emacs.
-      ;; So just pretend to do what I ask.
-      (bury-buffer)
-    ;; We have to expand the file names or else naming a directory in an
-    ;; argument causes later arguments to be looked for in that directory,
-    ;; not the starting directory
-    (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+;; ibuffer customisation
+;; http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(setq ibuffer-saved-filter-groups
+      '(("emacs-config" (or (filename . ".emacs.d")
+                            (filename . "emacs-config")))
+        ("Org" (mode . org-mode))
+        ("Python" (mode . python-mode))
+        ("Magit" (name . "\*magit"))
+        ("Jabber" (name . "jabber\*"))
+        ("Help" (or (name . "\*Help\*")
+                    (name . "\*Apropos\*")
+                    (name . "\*info\*")))))
+
+(setq ibuffer-expert t)
+
+(setq ibuffer-show-empty-filter-groups nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs auto-settings
@@ -224,19 +218,27 @@ it)"
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-  '(org-agenda-files (quote ("~/org/main.org"))))
+ '(ibuffer-formats (quote ((mark
+                            modified
+                            read-only
+                            git-status-mini
+                            " "
+                            (name 18 18 :left :elide)
+                            " "
+                            (size 9 -1 :right)
+                            " "
+                            (mode 16 16 :left :elide)
+                            " "
+                            (git-status 8 8 :left)
+                            " "
+                            filename-and-process)
+                           (mark " " (name 16 -1) " " filename))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; http://emacs-fu.blogspot.com/2010/01/duplicating-lines-and-commenting-them.html
-(defun djcb-duplicate-line (&optional commentfirst)
-  "comment line at point; if COMMENTFIRST is non-nil, comment the original" 
-  (interactive)
-  (beginning-of-line)
-  (push-mark)
-  (end-of-line)
-  (let ((str (buffer-substring (region-beginning) (region-end))))
-    (when commentfirst
-    (comment-region (region-beginning) (region-end)))
-    (insert-string
-      (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
-    (forward-line -1)))
+ '(org-agenda-files (quote ("~/org/main.org"))))
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
