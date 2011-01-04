@@ -88,6 +88,7 @@
 (require 'zenburn)
 (require 'color-theme-tango)
 (require 'folio)
+(require 'highlight-parentheses)
 
 ;; (color-theme-tango)
 ;; (color-theme-gunmetal)
@@ -218,22 +219,8 @@ it)"
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(ibuffer-formats (quote ((mark
-                            modified
-                            read-only
-                            git-status-mini
-                            " "
-                            (name 18 18 :left :elide)
-                            " "
-                            (size 9 -1 :right)
-                            " "
-                            (mode 16 16 :left :elide)
-                            " "
-                            (git-status 8 8 :left)
-                            " "
-                            filename-and-process)
-                           (mark " " (name 16 -1) " " filename))))
-
+ '(hl-paren-colors (quote ("firebrick" "lightgreen" "orange" "cyan")))
+ '(ibuffer-formats (quote ((mark modified read-only git-status-mini " " (name 18 18 :left :elide) " " (size 9 -1 :right) " " (mode 16 16 :left :elide) " " (git-status 8 8 :left) " " filename-and-process) (mark " " (name 16 -1) " " filename))))
  '(org-agenda-files (quote ("~/org/main.org"))))
 
 (custom-set-faces
