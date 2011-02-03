@@ -96,13 +96,14 @@
 (require 'color-theme-tango)
 (require 'folio)
 (require 'highlight-parentheses)
+(require 'naquadah-theme)
 
 ;; (color-theme-tango)
 ;; (color-theme-gunmetal)
 ;; (color-theme-folio)
 ;; (color-theme-zenburn)
 
-(color-theme-gunmetal)
+;(color-theme-gunmetal)
 
 (setq daytheme 0)
 (defun toggle-daynight ()
