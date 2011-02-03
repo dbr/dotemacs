@@ -31,6 +31,7 @@
 (require 'textmate) ;; http://github.com/defunkt/textmate.el
 (require 'paredit)
 (require 'twittering-mode)
+(require 'cmake-mode)
 
 (ido-mode 1) ;; C-x b and C-x C-f etc to use shiner minibuf
 
