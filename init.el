@@ -90,6 +90,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Themes
 (add-to-list 'load-path "~/.emacs.d/lib/color-theme")
+(add-to-list 'load-path "~/.emacs.d/lib/rainbow")
+(add-to-list 'load-path "~/.emacs.d/lib/google-maps")
 (add-to-list 'load-path "~/.emacs.d/lib/")
 (require 'color-theme)
 (require 'gunmetal)
@@ -98,6 +100,8 @@
 (require 'folio)
 (require 'highlight-parentheses)
 (require 'naquadah-theme)
+(require 'rainbow-mode)
+(require 'google-maps)
 
 ;; (color-theme-tango)
 ;; (color-theme-gunmetal)
