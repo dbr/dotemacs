@@ -12,6 +12,9 @@
 (scroll-bar-mode 0)
 (display-battery-mode 0)
 
+;; Scroll without 
+(setq scroll-conservatively 10000)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sensible tab settings
 (setq-default indent-tabs-mode nil)
