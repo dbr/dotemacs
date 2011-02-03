@@ -1543,6 +1543,8 @@
      (riece-modeline-history-face ((t (nil))))
      (riece-modeline-unread-face ((t (nil))))
 
+     (rst-level-1-face ((t (:background "black"))))
+     (rst-level-2-face ((t (:background "grey30"))))
      (zmacs-region ((t (:background "grey30")))))))
 
 (provide 'gunmetal)
