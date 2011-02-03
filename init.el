@@ -23,14 +23,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load paths
 (add-to-list 'load-path "~/.emacs.d/lib/")
+(add-to-list 'load-path "~/.emacs.d/lib/twittering-mode")
+
 
 (require 'ibuffer-git) ;; http://jrockway.github.com/ibuffer-git/
 (require 'magit) ;; http://zagadka.vm.bytemark.co.uk/magit/
 (require 'textmate) ;; http://github.com/defunkt/textmate.el
 (require 'paredit)
-
+(require 'twittering-mode)
 
 (ido-mode 1) ;; C-x b and C-x C-f etc to use shiner minibuf
+
+(setq twittering-icon-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Start textmate-mode for Python
