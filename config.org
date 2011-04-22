@@ -1,0 +1,323 @@
+* Basic things
+** Tidier UI
+#+begin_src emacs-lisp
+(setq inhibit-splash-screen t)
+
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(display-battery-mode 0)
+#+end_src
+
+** Scrolling behaviour
+Avoids jumping half-a-screen when cursor reaches buttom of screen
+
+#+begin_src emacs-lisp
+(setq scroll-conservatively 10000)
+#+end_src
+** Default tab settings
+Don't indent with tabs, and make tab-width 4 just-in-case
+
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+#+end_src
+
+** Avoid FS mess
+*** Move autosave/backup files to ~/.emacs.d/autosaves and ~/.emacs.d/backups
+
+#+begin_src emacs-lisp
+(setq backup-directory-alist
+      `((".*" . , "~/.emacs.d/backups/")))
+(setq auto-save-file-name-transforms
+      `((".*" ,"~/.emacs.d/autosaves/" t)))
+#+end_src
+
+*** Ensure directory exists
+(make-directory "~/.emacs.d/backups" t)
+(make-directory "~/.emacs.d/autosaves" t)
+*** Remove old backups
+Remove backups older than one week
+
+#+begin_src emacs-lisp
+(message "Deleting old backup files...")
+(let ((week (* 60 60 24 7))
+      (current (float-time (current-time))))
+  (dolist (file (directory-files temporary-file-directory t))
+    (when (and (backup-file-name-p file)
+               (> (- current (float-time (fifth (file-attributes file))))
+                  week))
+      (message file)
+      (delete-file file))))
+#+end_src
+
+** Recent files
+*** Enable recentf mode
+Also limit to 25 files
+#+begin_src emacs-lisp
+(require 'recentf)
+(setq recentf-max-menu-items 25)
+#+end_src
+
+*** Don't clean up recent files
+It potentially access network drives, which could trigger tramp,
+http://stackoverflow.com/questions/880625
+
+#+begin_src emacs-lisp
+(setq recentf-auto-cleanup 'never)
+#+end_src
+
+*** Bind to C-x C-r
+"C-x r" would be better, but it interfers with "C-x r k" for kill-rectangle
+#+begin_src emacs-lisp
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+#+end_src
+* FS navigation
+** Use ido for shinier minibuf (C-x b and C-x C-f)
+#+begin_src emacs-lisp
+(ido-mode 1)
+#+end_src
+
+** Ignore files in ido
+Ignore .DS_Store and .pyc when finding files
+
+#+begin_src emacs-lisp
+(add-to-list 'ido-ignore-files "\\.DS_Store")
+(add-to-list 'ido-ignore-files "\\.pyc")
+#+end_src
+* org-mode config
+** Enable shift-selection in org
+#+begin_src emacs-lisp
+(setq org-support-shift-select t)
+#+end_src
+* Load path
+Get base directory
+
+#+begin_src emacs-lisp
+(setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
+#+end_src
+
+Load base ext/ directories for loose .el files
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "ext" dotfiles-dir))
+#+end_src
+
+Load various directories
+
+#+begin_src emacs-lisp
+(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c"))
+  (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
+#+end_src
+** TODO func to add to loadpath?
+** TODO Auto-load all directories in ext/?
+* Misc modules
+** Theme
+*** Gunmetal
+Heavily tweaked gunmetal theme
+
+#+begin_src emacs-lisp
+(require 'color-theme)
+(require 'gunmetal)
+#+end_src
+*** Naquadah
+http://julien.danjou.info/blog/2011.html#Naquadah_theme_for_Emacs
+#+begin_src emacs-lisp
+(require 'naquadah-theme)
+#+end_src
+** highlight-parentheses
+Require module and set nicer colours
+
+http://www.emacswiki.org/emacs/HighlightParentheses
+
+#+begin_src emacs-lisp
+(require 'highlight-parentheses)
+(setq hl-paren-colors (quote ("firebrick" "lightgreen" "orange" "cyan")))
+#+end_src
+** cmake-mode
+#+begin_src emacs-lisp
+(require 'cmake-mode)
+(setq auto-mode-alist
+      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
+                ("\\.cmake\\'" . cmake-mode))
+              auto-mode-alist))
+#+end_src
+** textmate-mode
+Require and auto load for .py files
+
+#+begin_src emacs-lisp
+(require 'textmate)
+(add-hook 'python-mode-hook
+'(lambda ()
+	(interactive)
+	(textmate-mode)))
+#+end_src
+** Window resizing shortcuts
+Super+ctrl+arrows
+
+#+begin_src emacs-lisp
+(global-set-key [(super control right)] 'shrink-window-horizontally)
+(global-set-key [(super control left)] 'enlarge-window-horizontally)
+(global-set-key [(super control up)] 'shrink-window)
+(global-set-key [(super control down)] 'enlarge-window)
+#+end_src
+
+** Window-jumping shortcuts
+#+begin_src emacs-lisp
+(require 'windmove)
+(windmove-default-keybindings 'super)
+#+end_src
+** Super+return makes new line after current
+#+begin_src emacs-lisp
+(defun make-newline-after-current()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+(global-set-key [(super return)] 'make-newline-after-current)
+#+end_src
+** Google maps
+Erm.
+http://julien.danjou.info/google-maps-el.html
+#+begin_src emacs-lisp
+(require 'google-maps)
+#+end_src
+
+** Rainbow
+Useful for editing themes and CSS
+http://julien.danjou.info/rainbow-mode.html
+#+begin_src emacs-lisp
+(require 'rainbow-mode)
+#+end_src
+** yasnippet
+*** Load code
+#+begin_src emacs-lisp
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory (expand-file-name "snippets" (expand-file-name "yasnippet-0.6.1c" (expand-file-name "ext" dotfiles-dir))))
+#+end_src
+*** Custom snippet dir
+#+begin_src emacs-lisp
+(yas/load-directory (expand-file-name "snippets" dotfiles-dir))
+#+end_src
+*** Make it work in org-mode
+org-mode's tab overriding prevents yasnippet from working
+
+http://orgmode.org/worg/org-faq.html#YASnippet
+#+begin_src emacs-lisp
+(defun yas/org-very-safe-expand ()
+  (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            ;; yasnippet (using the new org-cycle hooks)
+            (make-variable-buffer-local 'yas/trigger-key)
+            (setq yas/trigger-key [tab])
+            (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+            (define-key yas/keymap [tab] 'yas/next-field)))
+#+end_src
+** Flymake
+*** For python
+#+begin_src emacs-lisp
+(when (load "flymake" t) 
+  (defun flymake-pyflakes-init () 
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy 
+		       'flymake-create-temp-inplace)) 
+	   (local-file (file-relative-name 
+			temp-file 
+			(file-name-directory buffer-file-name)))) 
+      (list "pyflakes" (list local-file)))) 
+
+  (add-to-list 'flymake-allowed-file-name-masks 
+	       '("\\.py\\'" flymake-pyflakes-init)))
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+#+end_src
+*** Show error under cursor
+If the cursor is sitting on a flymake error, display the message in
+the minibuf. Also bind C-c v to jump to next error
+
+Originally found on http://paste.lisp.org/display/60617
+
+#+begin_src emacs-lisp
+  (defun show-fly-err-at-point ()
+    "If the cursor is sitting on a flymake error, display the
+  message in the minibuffer"
+    (interactive)
+    (let ((line-no (line-number-at-pos)))
+      (dolist (elem flymake-err-info)
+        (if (eq (car elem) line-no)
+        (let ((err (car (second elem))))
+          (message "%s" (fly-pyflake-determine-message err)))))))
+  
+  (defun fly-pyflake-determine-message (err)
+    "pyflake is flakey if it has compile problems, this adjusts the
+  message to display, so there is one ;)"
+    (cond ((not (or (eq major-mode 'Python) (eq major-mode 'python-mode) t)))
+      ((null (flymake-ler-file err))
+       ;; normal message do your thing
+       (flymake-ler-text err))
+      (t ;; could not compile err
+       (format "compile error, problem on line %s" (flymake-ler-line err)))))
+  
+  (defadvice flymake-goto-next-error (after display-message activate compile)
+    "Display the error in the mini-buffer rather than having to mouse over it"
+    (show-fly-err-at-point))
+  
+  (defadvice flymake-goto-prev-error (after display-message activate compile)
+    "Display the error in the mini-buffer rather than having to mouse over it"
+    (show-fly-err-at-point))
+  
+  (defadvice flymake-mode (before post-command-stuff activate compile)
+    "Add functionality to the post command hook so that if the
+  cursor is sitting on a flymake error the error information is
+  displayed in the minibuffer (rather than having to mouse over
+  it)"
+    (set (make-local-variable 'post-command-hook)
+         (cons 'show-fly-err-at-point post-command-hook))) 
+  
+  (defun my-flymake-show-next-error()
+    (interactive)
+    (flymake-goto-next-error)
+  ;;  (flymake-display-err-menu-for-current-line))
+    )
+  
+  (global-set-key (kbd "C-c v") 'my-flymake-show-next-error)
+#+end_src
+
+** IBuffer
+*** Bind to C-x C-b
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+#+end_src
+*** Configure groups
+#+begin_src emacs-lisp
+(setq ibuffer-saved-filter-groups
+      '(("emacs-config" (or (filename . ".emacs.d")
+                            (filename . "emacs-config")))
+        ("Org" (mode . org-mode))
+        ("Python" (mode . python-mode))
+        ("Jabber" (name . "jabber\*"))
+        ("Help" (or (name . "\*Help\*")
+                    (name . "\*Apropos\*")
+                    (name . "\*info\*")))))
+#+end_src
+*** Fix find-file key override
+ido'ify the overridden find-file shortcut, which starts ifo-find-file
+in the same directory as the file under the cursor
+
+From http://www.emacswiki.org/emacs/InteractivelyDoThings
+
+#+begin_src emacs-lisp
+(require 'ibuffer)
+(defun ibuffer-ido-find-file ()
+  "Like 'ido-find-file', but default to the directory of the buffer at point."
+  (interactive
+   (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+			      (if (buffer-live-p buf)
+				  (with-current-buffer buf
+				    default-directory)
+				default-directory))))
+     (ido-find-file-in-dir default-directory))))
+
+(define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
+#+end_src
+
