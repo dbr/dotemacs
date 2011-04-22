@@ -30,7 +30,7 @@
       (green "#89E234")
       (blue "#1144AA")
       (yellow "#FCCD3A")
-      (pink "#DE336D")
+      (pink "#DE226a")
       (red "#8A0B0B")
       (violet-blue "#5337AD")
       (orange "#FFA500")
@@ -41,7 +41,7 @@
    'naquadah
    `(default ((((min-colors 4096)) (:background ,background :foreground "#eeeeec"))))
    `(shadow ((t (:foreground ,shadow))))
-   '(cursor ((t (:background "#AC1313"))))
+   '(cursor ((t (:background "orange"))))
    '(hl-line ((t (:background "#191919"))))
    `(highlight ((t (:background ,red))))
    '(fringe ((t (:background "gray10"))))
