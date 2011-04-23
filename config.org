@@ -288,9 +288,20 @@ Originally found on http://paste.lisp.org/display/60617
 #+end_src
 
 ** IBuffer
+http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
 *** Bind to C-x C-b
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+#+end_src
+*** Misc config
+Avoid prompts when killing buffers
+#+begin_src emacs-lisp
+(setq ibuffer-expert t)
+#+end_src
+
+Hide empty groups
+#+begin_src emacs-lisp
+(setq ibuffer-show-empty-filter-groups nil)
 #+end_src
 *** Configure groups
 #+begin_src emacs-lisp
