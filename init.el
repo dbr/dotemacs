@@ -1,7 +1,5 @@
-;; init.el --- Where all the magic begins
-;;
-;; This is the first thing to get loaded.
-;;
+;; Loads the config.org babel file
+;; http://orgmode.org/worg/org-contrib/babel/intro.html
 
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 
@@ -16,4 +14,3 @@
 ;; load up the main file
 (org-babel-load-file (expand-file-name "config.org" dotfiles-dir))
 
-;;; init.el ends here
