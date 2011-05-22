@@ -104,7 +104,7 @@ Load base ext/ directories for loose .el files
 Load various directories
 
 #+begin_src emacs-lisp
-(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c"))
+(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 ** TODO func to add to loadpath?
@@ -334,5 +334,26 @@ From http://www.emacswiki.org/emacs/InteractivelyDoThings
      (ido-find-file-in-dir default-directory))))
 
 (define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
+#+end_src
+
+** smex
+Weighted ido'ish M-x enhancement
+https://github.com/nonsequitur/smex
+
+Setup:
+#+begin_src emacs-lisp
+(require 'smex)
+(smex-initialize)
+#+end_src
+
+Key bindings:
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+#+end_src
+
+Original M-x bound to C-c C-c M-x:
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 #+end_src
 
