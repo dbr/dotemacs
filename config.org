@@ -373,3 +373,8 @@ Original M-x bound to C-c C-c M-x:
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 #+end_src
 
+** rib-mode
+For editing renderman'ish RIB files
+#+begin_src emacs-lisp
+(require 'rib-mode)
+#+end_src
