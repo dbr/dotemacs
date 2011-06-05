@@ -378,3 +378,15 @@ For editing renderman'ish RIB files
 #+begin_src emacs-lisp
 (require 'rib-mode)
 #+end_src
+** escreen
+http://blog.nguyenvq.com/2011/03/07/escreen-instead-of-elscreen-for-screen-like-features-in-emacs/
+*** Load
+#+begin_src emacs-lisp
+(load "escreen")
+(escreen-install)
+#+end_src
+*** Bind prefix to C-z
+#+begin_src emacs-lisp
+(setq escreen-prefix-char "\C-z")
+(global-set-key escreen-prefix-char 'escreen-prefix)
+#+end_src
