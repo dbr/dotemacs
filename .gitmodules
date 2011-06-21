@@ -1,0 +1,3 @@
+[submodule "ext/google-maps"]
+	path = ext/google-maps
+	url = git://git.naquadah.org/google-maps.git
