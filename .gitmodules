@@ -1,3 +1,6 @@
 [submodule "ext/google-maps"]
 	path = ext/google-maps
 	url = git://git.naquadah.org/google-maps.git
+[submodule "ext/org-mode"]
+	path = ext/org-mode
+	url = git://orgmode.org/org-mode.git
