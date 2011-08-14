@@ -21,7 +21,15 @@ Don't indent with tabs, and make tab-width 4 just-in-case
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 #+end_src
-
+** C++ indentation
+if(blah)
+{
+    etc;
+}
+#+begin_src emacs-lisp
+(setq-default c-basic-offset 4)
+(setq-default c-default-style "bsd")
+#+end_src
 ** Avoid FS mess
 *** Move autosave/backup files to ~/.emacs.d/autosaves and ~/.emacs.d/backups
 
