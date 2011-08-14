@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: throwmsg
+# key: throwmsg
+# --
+std::ostringstream os;
+os << "$1";
+throw ${2:Exception}(os.str().c_str());
