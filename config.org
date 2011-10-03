@@ -52,8 +52,10 @@ Message in minibuf on bell, instead of system beep etc
 #+end_src
 
 *** Ensure directory exists
+#+begin_src emacs-lisp
 (make-directory "~/.emacs.d/backups" t)
 (make-directory "~/.emacs.d/autosaves" t)
+#+end_src
 *** Remove old backups
 Remove backups older than one week
 
