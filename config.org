@@ -469,6 +469,7 @@ Original M-x bound to C-c C-c M-x:
 For editing renderman'ish RIB files
 #+begin_src emacs-lisp
 (require 'rib-mode)
+(add-to-list 'auto-mode-alist '("\\.rib$" . rib-mode))
 #+end_src
 ** escreen
 http://blog.nguyenvq.com/2011/03/07/escreen-instead-of-elscreen-for-screen-like-features-in-emacs/
@@ -493,7 +494,7 @@ http://tsengf.blogspot.com/2011/06/distinguish-buffers-of-same-filename-in.html
 (global-set-key (kbd "<M-up>") (lambda () (interactive) (scroll-down 1)))
 (global-set-key (kbd "<M-down>") (lambda () (interactive) (scroll-up 1)))
 #+end_src
-** rope
+** rope (disabled)
 #+begin_src emacs-lisp
 ; Append ~/.emacs/python or similar to PYTHONPATH
 (setenv "PYTHONPATH" (concat (expand-file-name "python" (file-name-directory (or load-file-name (buffer-file-name))))
@@ -537,7 +538,7 @@ M-@ to highlight word under cusror
 (global-set-key [(meta @)] 'mark-word-under-cursor)
 #+end_src
 ** Search word under cusror
-vim-ish search word under cursor
+M-# for vim-ish search word under cursor
 #+begin_src emacs-lisp
 (defvar isearch-initial-string nil)
 
