@@ -27,7 +27,10 @@ if(blah)
 {
     etc;
 }
-
+#+begin_src emacs-lisp
+(setq-default c-basic-offset 4)
+(setq-default c-default-style "bsd") # or k&r?
+#+end_src
 ** Quieter visual bell
 Message in minibuf on bell, instead of system beep etc
 #+begin_src emacs-lisp
@@ -35,8 +38,6 @@ Message in minibuf on bell, instead of system beep etc
 #+end_src
 *** Flash scroll-lock LED (disabled)
 #+begin_src emacs-lisp
-(setq-default c-basic-offset 4)
-(setq-default c-default-style "bsd")
 ;(setq ring-bell-function (lambda ()
 ;  (call-process-shell-command "xset led 3; xset -led 3" nil 0 nil)))
 #+end_src
