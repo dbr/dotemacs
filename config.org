@@ -104,6 +104,12 @@ http://atomized.org/2010/08/scratch-buffers-for-emacs/
         (let ((buffer-file-name (or buffer-file-name (buffer-name))))
           (set-auto-mode))))
 #+end_src
+** uniqify buffer names
+Replace useless blah.txt<2> with blah.txt<thedirectory>
+#+begin_src emacs-lisp
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+#+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
