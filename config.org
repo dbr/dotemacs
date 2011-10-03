@@ -110,6 +110,12 @@ Replace useless blah.txt<2> with blah.txt<thedirectory>
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 #+end_src
+** Access killring menu
+#+begin_src emacs-lisp
+(global-set-key "\C-cy" '(lambda ()
+   (interactive)
+   (popup-menu 'yank-menu)))
+#+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
