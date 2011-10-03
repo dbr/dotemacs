@@ -125,7 +125,6 @@ alias jm='cd $(emacsclient -e "(with-current-buffer (window-buffer (frame-select
 #+end_src
 * Load path
 Get base directory
-
 #+begin_src emacs-lisp
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 #+end_src
@@ -136,13 +135,12 @@ Load base ext/ directories for loose .el files
 #+end_src
 
 Load various directories
-
 #+begin_src emacs-lisp
 (dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
-** TODO func to add to loadpath?
-** TODO Auto-load all directories in ext/?
+*** TODO func to add to loadpath?
+*** TODO Auto-load all directories in ext/?
 * Misc modules
 ** Theme
 *** Gunmetal
