@@ -27,9 +27,18 @@ if(blah)
 {
     etc;
 }
+
+** Quieter visual bell
+Message in minibuf on bell, instead of system beep etc
+#+begin_src emacs-lisp
+(setq ring-bell-function (lambda () (message "*beep*")))
+#+end_src
+*** Flash scroll-lock LED (disabled)
 #+begin_src emacs-lisp
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd")
+;(setq ring-bell-function (lambda ()
+;  (call-process-shell-command "xset led 3; xset -led 3" nil 0 nil)))
 #+end_src
 ** Avoid FS mess
 *** Move autosave/backup files to ~/.emacs.d/autosaves and ~/.emacs.d/backups
