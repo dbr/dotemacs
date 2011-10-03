@@ -515,4 +515,12 @@ https://github.com/yoshiki/yaml-mode
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 #+end_src
+** clear shell
+Clear inferior-python shell etc
+#+begin_src emacs-lisp
+(defun clear-shell ()
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+#+end_src
 * Laptop keyboard specific stuff
