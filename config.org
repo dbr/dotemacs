@@ -558,4 +558,15 @@ vim-ish search word under cursor
 
 (global-set-key (kbd "M-#") 'isearch-forward-at-point)
 #+end_src
+** Home between beginning of line or indentation
+#+begin_src emacs-lisp
+(defun beginning-of-line-or-indentation ()
+  "move to beginning of line, or indentation"
+  (interactive)
+  (if (bolp)
+      (back-to-indentation)
+    (beginning-of-line)))
+
+(global-set-key [home] 'beginning-of-line-or-indentation)
+#+end_src
 * Laptop keyboard specific stuff
