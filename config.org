@@ -429,12 +429,14 @@ http://tsengf.blogspot.com/2011/06/distinguish-buffers-of-same-filename-in.html
 ; Append ~/.emacs/python or similar to PYTHONPATH
 (setenv "PYTHONPATH" (concat (expand-file-name "python" (file-name-directory (or load-file-name (buffer-file-name))))
                              (getenv "PYTHONPATH")))
+
+;(require 'pymacs)
+;(pymacs-load "ropemacs" "rope-")
+#+end_src
 ** tempbuf
 Automatic removal of unused buffers
 http://www.emacswiki.org/emacs/TempbufMode
 
-;(require 'pymacs)
-;(pymacs-load "ropemacs" "rope-")
 #+begin_src emacs-lisp
 (require 'tempbuf)
 (add-hook 'buffer-list 'turn-on-tempbuf-mode)
