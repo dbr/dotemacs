@@ -523,4 +523,39 @@ Clear inferior-python shell etc
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 #+end_src
+** Mark word under cursor
+M-@ to highlight word under cusror
+
+#+begin_src emacs-lisp
+(defun mark-word-under-cursor ()
+  (interactive)
+  (backward-word)
+  (mark-word))
+
+(global-set-key [(meta @)] 'mark-word-under-cursor)
+#+end_src
+** Search word under cusror
+vim-ish search word under cursor
+#+begin_src emacs-lisp
+(defvar isearch-initial-string nil)
+
+(defun isearch-set-initial-string ()
+  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
+  (setq isearch-string isearch-initial-string)
+  (isearch-search-and-update))
+
+(defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
+  "Interactive search forward for the symbol at point."
+  (interactive "P\np")
+  (if regexp-p (isearch-forward regexp-p no-recursive-edit)
+    (let* ((end (progn (skip-syntax-forward "w_") (point)))
+           (begin (progn (skip-syntax-backward "w_") (point))))
+      (if (eq begin end)
+          (isearch-forward regexp-p no-recursive-edit)
+        (setq isearch-initial-string (buffer-substring begin end))
+        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
+        (isearch-forward regexp-p no-recursive-edit)))))
+
+(global-set-key (kbd "M-#") 'isearch-forward-at-point)
+#+end_src
 * Laptop keyboard specific stuff
