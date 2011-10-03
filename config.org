@@ -136,7 +136,7 @@ Load base ext/ directories for loose .el files
 
 Load various directories
 #+begin_src emacs-lisp
-(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex"))
+(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 *** TODO func to add to loadpath?
@@ -448,5 +448,12 @@ From http://kieranhealy.org/esk/kjhealy.html
 
 #+begin_src emacs-lisp
 (setq org-src-window-setup 'current-window)
+#+end_src
+** yaml-mode
+https://github.com/yoshiki/yaml-mode
+#+begin_src emacs-lisp
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 #+end_src
 * Laptop keyboard specific stuff

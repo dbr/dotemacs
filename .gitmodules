@@ -10,3 +10,6 @@
 [submodule "ext/smex"]
 	path = ext/smex
 	url = https://github.com/nonsequitur/smex.git
+[submodule "ext/yaml-mode"]
+	path = ext/yaml-mode
+	url = git://github.com/yoshiki/yaml-mode.git
