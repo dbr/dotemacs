@@ -68,6 +68,11 @@ Remove backups older than one week
       (delete-file file))))
 #+end_src
 
+** Empty default scratch buffer
+#+begin_src emacs-lisp
+(setq initial-scratch-message "")
+#+end_src
+
 ** Recent files
 *** Enable recentf mode
 Also limit to 25 files
