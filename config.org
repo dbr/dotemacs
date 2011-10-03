@@ -121,6 +121,17 @@ Replace useless blah.txt<2> with blah.txt<thedirectory>
 (global-set-key [f1] 'previous-buffer)
 (global-set-key [f2] 'next-buffer)
 #+end_src
+** Fullscreen
+Only really works on Linux
+#+begin_src emacs-lisp
+(defun fullscreen (&optional f)
+  (interactive)
+  (set-frame-parameter f 'fullscreen
+                       (if (frame-parameter f 'fullscreen) nil 'fullboth)))
+
+;(add-hook 'after-make-frame-functions 'fullscreen) ; on startup
+(global-set-key [f11] 'fullscreen)
+#+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
