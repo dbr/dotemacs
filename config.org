@@ -215,11 +215,12 @@ Heavily tweaked gunmetal theme
 #+begin_src emacs-lisp
 (require 'color-theme)
 (require 'gunmetal)
+(color-theme-gunmetal)
 #+end_src
 *** Naquadah
 http://julien.danjou.info/blog/2011.html#Naquadah_theme_for_Emacs
 #+begin_src emacs-lisp
-(require 'naquadah-theme)
+;(require 'naquadah-theme)
 #+end_src
 ** Undo window changes
 Undo changes to layout with C-left C-right
