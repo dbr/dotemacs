@@ -441,4 +441,14 @@ http://www.emacswiki.org/emacs/TempbufMode
 (require 'tempbuf)
 (add-hook 'buffer-list 'turn-on-tempbuf-mode)
 #+end_src
+** org babel stuff
+Configure org-mode so that when you edit source code in an indirect
+buffer (with C-c '), the buffer is opened in the current window. That
+way, your window organization isn't broken when switching.
+
+From http://kieranhealy.org/esk/kjhealy.html
+
+#+begin_src emacs-lisp
+(setq org-src-window-setup 'current-window)
+#+end_src
 * Laptop keyboard specific stuff
