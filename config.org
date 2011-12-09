@@ -203,7 +203,7 @@ Load base ext/ directories for loose .el files
 
 Load various directories
 #+begin_src emacs-lisp
-(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode"))
+(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 *** TODO func to add to loadpath?
@@ -611,5 +611,15 @@ M-# for vim-ish search word under cursor
 
 ; (global-set-key [M-up] 'move-text-up)
 ; (global-set-key [M-down] 'move-text-down)
+#+end_src
+** multi-term
+#+begin_src emacs-lisp
+(autoload 'multi-term "multi-term" nil t)
+(autoload 'multi-term-next "multi-term" nil t)
+
+(setq multi-term-program "/bin/bash")
+
+(global-set-key (kbd "C-c t") 'multi-term-next)
+(global-set-key (kbd "C-c T") 'multi-term) ;; create a new one
 #+end_src
 * Laptop keyboard specific stuff
