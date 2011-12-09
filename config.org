@@ -498,6 +498,7 @@ http://tsengf.blogspot.com/2011/06/distinguish-buffers-of-same-filename-in.html
 #+begin_src emacs-lisp
 ; Append ~/.emacs/python or similar to PYTHONPATH
 (setenv "PYTHONPATH" (concat (expand-file-name "python" (file-name-directory (or load-file-name (buffer-file-name))))
+                             ":"
                              (getenv "PYTHONPATH")))
 
 ;(require 'pymacs)
