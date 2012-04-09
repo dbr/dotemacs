@@ -327,6 +327,11 @@ http://orgmode.org/worg/org-faq.html#YASnippet
             (define-key yas/keymap [tab] 'yas/next-field)))
 #+end_src
 ** Flymake
+*** Prevent popups on OS X
+http://stackoverflow.com/a/9885264/745
+#+begin_src emacs-lisp
+(setq flymake-gui-warnings-enabled nil)
+#+end_src
 *** For python
 #+begin_src emacs-lisp
 (defun flymake-create-temp-in-system-tempdir (filename prefix)
