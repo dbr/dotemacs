@@ -1,4 +1,6 @@
 .DS_Store
+auto-save-list/*
+autosaves/*
 backups/*
 lib/cedet
 url/cache
