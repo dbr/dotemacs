@@ -581,6 +581,10 @@ M-# for vim-ish search word under cursor
 
 (global-set-key [home] 'beginning-of-line-or-indentation)
 #+end_src
+** end key to end of line
+#+begin_src emacs-lisp
+(global-set-key [end] 'end-of-line)
+#+end_src
 ** Move lines (disabled)
 #+begin_src emacs-lisp
 (defun move-text-internal (arg)
