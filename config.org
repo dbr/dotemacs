@@ -144,9 +144,12 @@ Only really works on Linux
 ** Ignore files in ido
 Ignore .DS_Store and .pyc when finding files
 
+Icon ignore is a bit vague, http://stackoverflow.com/q/9053161/745
+
 #+begin_src emacs-lisp
 (add-to-list 'ido-ignore-files "\\.DS_Store")
 (add-to-list 'ido-ignore-files "\\.pyc")
+(add-to-list 'ido-ignore-files "Icon")
 #+end_src
 ** Prevent ido searching for locations
 Disable auto searching for files unless called explicitly, prevents
