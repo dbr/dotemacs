@@ -643,4 +643,8 @@ http://www.emacswiki.org/emacs/FastNav
 (global-set-key "\M-p" 'sprint-forward)
 (global-set-key "\M-P" 'sprint-backward)
 #+end_src
+** git-blame
+#+begin_src emacs-lisp
+(require 'git-blame)
+#+end_src
 * Laptop keyboard specific stuff
