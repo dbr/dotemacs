@@ -5,4 +5,5 @@ backups/*
 lib/cedet
 url/cache
 config.el
+url/cookies
 *.pyc
