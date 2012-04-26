@@ -4,9 +4,6 @@
 [submodule "ext/org-mode"]
 	path = ext/org-mode
 	url = git://orgmode.org/org-mode.git
-[submodule "ext/rainbow"]
-	path = ext/rainbow
-	url = git://git.naquadah.org/rainbow.git
 [submodule "ext/smex"]
 	path = ext/smex
 	url = https://github.com/nonsequitur/smex.git

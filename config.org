@@ -206,7 +206,7 @@ Load base ext/ directories for loose .el files
 
 Load various directories
 #+begin_src emacs-lisp
-(dolist (d '("rainbow" "google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term" "restclient"))
+(dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term" "restclient"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 *** TODO func to add to loadpath?
