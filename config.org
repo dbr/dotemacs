@@ -672,4 +672,9 @@ http://jblevins.org/projects/markdown-mode/
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 #+end_src
+** ace-jump-mode
+#+begin_src emacs-lisp
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+#+end_src
 * Laptop keyboard specific stuff
