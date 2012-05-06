@@ -677,4 +677,22 @@ http://jblevins.org/projects/markdown-mode/
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 #+end_src
+** coffee-script mode
+*** Auto-mode for .coffee
+#+begin_src emacs-lisp
+(require 'coffee-mode)
+#+end_src
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+#+end_src
+*** Convention'y tab-width
+#+begin_src emacs-lisp
+(defun coffee-custom ()
+  "coffee-mode-hook"
+ (set (make-local-variable 'tab-width) 2))
+
+(add-hook 'coffee-mode-hook
+  '(lambda() (coffee-custom)))
+#+end_src
 * Laptop keyboard specific stuff
