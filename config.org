@@ -8,6 +8,10 @@
 (display-battery-mode 0)
 #+end_src
 
+** Shorter prompt
+#+begin_src emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
 ** Scrolling behaviour
 Avoids jumping half-a-screen when cursor reaches buttom of screen
 
