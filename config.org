@@ -714,3 +714,23 @@ http://philjackson.github.com/magit/magit.html
 #+begin_src emacs-lisp
 #+end_src
 * Laptop keyboard specific stuff
+* Notes
+** rgb to hex function
+Might be useful for modifying theme at some point
+
+#+BEGIN_EXAMPLE
+(defun rgb (r &optional g b)
+  "Converts three RGB values to HTMLish hex string.
+
+  If supplied a single value, it is treated as a greyscale value (e.g
+  (rgb 255) is identical to (rgb 255 255 255)
+
+  ELISP> (rgb 0 128 255)
+  \"#0080FF\"
+  ELISP> (rgb 255)
+  \"#FFFFFF\"
+  "
+  (if (and g b)
+      (format "#%02X%02X%02X" r g b)
+    (format "#%02X%02X%02X" r r r)))
+#+END_EXAMPLE
