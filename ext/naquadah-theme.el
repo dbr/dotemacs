@@ -43,7 +43,7 @@
    `(shadow ((t (:foreground ,shadow))))
    '(cursor ((t (:background "orange"))))
    '(hl-line ((t (:background "#191919"))))
-   `(highlight ((t (:background ,red))))
+   `(highlight ((t (:background, "grey30"))))
    '(fringe ((t (:background "gray10"))))
    '(mode-line ((t (:foreground "#fafafa" :background "#000000" :box (:line-width 1 :color "#444444")))))
    '(mode-line-inactive ((t (:foreground "#888888" :background "#2c2f2f" :box (:line-width 1 :color "black")))))
