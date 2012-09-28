@@ -523,10 +523,14 @@ http://tsengf.blogspot.com/2011/06/distinguish-buffers-of-same-filename-in.html
 ** tempbuf
 Automatic removal of unused buffers
 http://www.emacswiki.org/emacs/TempbufMode
-
+*** Enable mode
 #+begin_src emacs-lisp
 (require 'tempbuf)
+#+end_src
+*** Enable for specific modes
+#+begin_src emacs-lisp
 (add-hook 'buffer-list 'turn-on-tempbuf-mode)
+(add-hook 'dired-mode-hook 'turn-on-tempbuf-mode)
 #+end_src
 ** yaml-mode
 https://github.com/yoshiki/yaml-mode
