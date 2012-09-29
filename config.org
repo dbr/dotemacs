@@ -214,7 +214,7 @@ Load base ext/ directories for loose .el files
 
 Load various directories
 #+begin_src emacs-lisp
-(dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term" "restclient" "magit"))
+(dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term" "restclient" "magit" "multiple-cursors"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 
@@ -721,6 +721,18 @@ http://philjackson.github.com/magit/magit.html
 #+end_src
 *** Custom key-bindings
 #+begin_src emacs-lisp
+#+end_src
+** multiple-cursors
+Multiple cursors, for editing multiple lines.
+
+https://github.com/magnars/multiple-cursors.el
+http://emacsrocks.com/e13.html
+#+begin_src emacs-lisp
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 #+end_src
 * Laptop keyboard specific stuff
 * Notes
