@@ -217,6 +217,11 @@ Load various directories
 (dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term" "restclient" "magit"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
+
+Theme load-path
+#+begin_src emacs-lisp
+(add-to-list 'custom-theme-load-path (expand-file-name "ext" dotfiles-dir))
+#+end_src
 *** TODO func to add to loadpath?
 *** TODO Auto-load all directories in ext/?
 * Misc modules
