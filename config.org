@@ -717,10 +717,11 @@ git interface
 http://philjackson.github.com/magit/magit.html
 *** Load module
 #+begin_src emacs-lisp
-(require 'magit)
+(autoload 'magit-status "magit" nil t)
 #+end_src
 *** Custom key-bindings
 #+begin_src emacs-lisp
+(global-set-key "\C-ci" 'magit-status)
 #+end_src
 ** multiple-cursors
 Multiple cursors, for editing multiple lines.
