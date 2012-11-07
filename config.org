@@ -227,32 +227,41 @@ http://blog.gabrielsaldana.org/quick-note-taking-with-emacs-and-org-capture/
 #+end_src
 ** Useful bash alias
 Jumps to directory of current file (for reference, not evaluated)
-http://www.reddit.com/r/emacs/comments/hd3jm/from_my_bashrc_jump_to_emacss_current_directory/#+begin_src bash
+http://www.reddit.com/r/emacs/comments/hd3jm/from_my_bashrc_jump_to_emacss_current_directory/
+#+begin_example
 alias jm='cd $(emacsclient -e "(with-current-buffer (window-buffer (frame-selected-window)) default-directory)" | '"sed -E 's/(^\")|(\"$)//g')"
-#+end_src
+#+end_example
 * Load path
-Get base directory
+*** Get base directory
 #+begin_src emacs-lisp
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 #+end_src
-
-Load base ext/ directories for loose .el files
+*** Load base ext/ directory
+Store singular .el files in root of ext/ directory
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "ext" dotfiles-dir))
 #+end_src
 
-Load various directories
+*** Subdirs of ext/
 #+begin_src emacs-lisp
-(dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "multi-term" "restclient" "magit" "multiple-cursors"))
+(dolist
+    (d '(
+         "google-maps"
+         "yasnippet-0.6.1c"
+         "smex"
+         "multi-term"
+         "restclient"
+         "magit"
+         "multiple-cursors"
+         ))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 
-Theme load-path
+*** Theme load-path
+For emacs 24 builtin theming thing
 #+begin_src emacs-lisp
 (add-to-list 'custom-theme-load-path (expand-file-name "ext" dotfiles-dir))
 #+end_src
-*** TODO func to add to loadpath?
-*** TODO Auto-load all directories in ext/?
 * Misc modules
 ** Theme
 *** Gunmetal (disabled)
