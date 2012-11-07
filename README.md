@@ -1,10 +1,9 @@
 ## To use
 
 - `git clone` the repo to ~/.emacs.d
-- Get org-mode with `git submodule init && git submodule update`
 - Launch emacs
 
-## Adding customisations
+## Making customisations
 
 All the configuring is done in `config.org` using org-babel blocks, e.g:
 
