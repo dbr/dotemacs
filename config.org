@@ -314,9 +314,9 @@ Super+ctrl+arrows
 Erm.
 http://julien.danjou.info/google-maps-el.html
 #+begin_src emacs-lisp
-(require 'google-maps)
+;(autoload 'google-maps)
+(autoload 'google-maps "google-maps")
 #+end_src
-
 ** Rainbow
 Useful for editing themes and CSS
 http://julien.danjou.info/rainbow-mode.html
