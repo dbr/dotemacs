@@ -515,16 +515,6 @@ http://tsengf.blogspot.com/2011/06/distinguish-buffers-of-same-filename-in.html
 (global-set-key (kbd "<M-up>") (lambda () (interactive) (scroll-down 1)))
 (global-set-key (kbd "<M-down>") (lambda () (interactive) (scroll-up 1)))
 #+end_src
-** rope (disabled)
-#+begin_src emacs-lisp
-; Append ~/.emacs/python or similar to PYTHONPATH
-(setenv "PYTHONPATH" (concat (expand-file-name "python" (file-name-directory (or load-file-name (buffer-file-name))))
-                             ":"
-                             (getenv "PYTHONPATH")))
-
-;(require 'pymacs)
-;(pymacs-load "ropemacs" "rope-")
-#+end_src
 ** tempbuf
 Automatic removal of unused buffers
 http://www.emacswiki.org/emacs/TempbufMode
