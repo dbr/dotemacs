@@ -248,7 +248,6 @@ Store singular .el files in root of ext/ directory
     (d '(
          "google-maps"
          "yasnippet-0.6.1c"
-         "smex"
          "multi-term"
          "restclient"
          "magit"
