@@ -427,6 +427,10 @@ Originally found on http://paste.lisp.org/display/60617
   (global-set-key (kbd "C-c v") 'my-flymake-show-next-error)
 #+end_src
 
+** Flycheck (disabled)
+*** TODO Try again when no-longer based on flymake
+Fancy modern replacement for flymake
+https://github.com/lunaryorn/flycheck
 ** IBuffer
 http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
 *** Bind to C-x C-b
