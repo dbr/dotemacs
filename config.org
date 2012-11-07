@@ -202,6 +202,20 @@ From http://kieranhealy.org/esk/kjhealy.html
 (setq org-src-window-setup 'current-window)
 #+end_src
 
+** org-capture config
+http://blog.gabrielsaldana.org/quick-note-taking-with-emacs-and-org-capture/
+*** shortcut
+#+begin_src emacs-lisp
+(global-set-key "\C-cr" 'org-capture)
+#+end_src
+*** Capture templates
+#+begin_src emacs-lisp
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline (concat org-directory "/todo.org") "Tasks")
+         "* TODO %?\n %i\n")
+        ("l" "Link" plain (file (concat org-directory "/links.org"))
+         "- %?\n %x\n")))
+#+end_src
 * Emacs server
 ** Start server
 #+begin_src emacs-lisp
@@ -420,9 +434,9 @@ Originally found on http://paste.lisp.org/display/60617
 
   (defun my-flymake-show-next-error()
     (interactive)
-    (flymake-goto-next-error)
+    (flymake-goto-next-error))
   ;;  (flymake-display-err-menu-for-current-line))
-    )
+
 
   (global-set-key (kbd "C-c v") 'my-flymake-show-next-error)
 #+end_src
