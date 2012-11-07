@@ -225,7 +225,7 @@ Load base ext/ directories for loose .el files
 
 Load various directories
 #+begin_src emacs-lisp
-(dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "yaml-mode" "multi-term" "restclient" "magit" "multiple-cursors"))
+(dolist (d '("google-maps" "yasnippet-0.6.1c" "smex" "multi-term" "restclient" "magit" "multiple-cursors"))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
 
@@ -541,7 +541,7 @@ http://www.emacswiki.org/emacs/TempbufMode
 ** yaml-mode
 https://github.com/yoshiki/yaml-mode
 #+begin_src emacs-lisp
-(require 'yaml-mode)
+(autoload 'yaml-mode "yaml-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 #+end_src
