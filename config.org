@@ -19,7 +19,7 @@ Avoids jumping half-a-screen when cursor reaches buttom of screen
 (setq scroll-conservatively 10000)
 #+end_src
 ** Default tab settings
-Don't indent with tabs, and make tab-width 4 just-in-case
+Don't indent with tabs, and make tab-width 4 just-in-case (mainly for untabify)
 
 #+begin_src emacs-lisp
 (setq-default indent-tabs-mode nil)
@@ -27,10 +27,14 @@ Don't indent with tabs, and make tab-width 4 just-in-case
 (setq tab-width 4)
 #+end_src
 ** C++ indentation
+Example indentation:
+#+begin_example
 if(blah)
 {
     etc;
 }
+#+end_example
+
 #+begin_src emacs-lisp
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd") ; or k&r?
