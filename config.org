@@ -677,6 +677,10 @@ http://www.emacswiki.org/emacs/FastNav
 #+begin_src emacs-lisp
 (require 'git-blame)
 #+end_src
+*** Show hash and start of commit message
+#+begin_src emacs-lisp
+(setq git-blame-prefix-format "%h %.10s:")
+#+end_src
 ** restclient
 https://github.com/pashky/restclient.el
 #+begin_src emacs-lisp
