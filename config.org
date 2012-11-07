@@ -305,11 +305,18 @@ Super+ctrl+arrows
 (global-set-key [(super control up)] 'shrink-window)
 (global-set-key [(super control down)] 'enlarge-window)
 #+end_src
-
 ** Window-jumping shortcuts
+*** Super+arrows
 #+begin_src emacs-lisp
 (require 'windmove)
 (windmove-default-keybindings 'super)
+#+end_src
+*** Non-arrow shortcuts
+#+begin_src emacs-lisp
+(global-set-key [(super n)]  'windmove-down)
+(global-set-key [(super p)]  'windmove-up)
+(global-set-key [(super b)]  'windmove-left)
+(global-set-key [(super f)]  'windmove-right)
 #+end_src
 ** Super+return makes new line after current
 #+begin_src emacs-lisp
