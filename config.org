@@ -766,6 +766,9 @@ http://emacsrocks.com/e13.html
 #+begin_src emacs-lisp
 ; (global-set-key [(super s)] 'sr-speedbar-toggle)
 #+end_src
+** mu4e (disabled)
+Email client
+http://www.djcbsoftware.nl/code/mu/mu4e.html
 * Laptop keyboard specific stuff
 * Notes
 ** rgb to hex function
