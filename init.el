@@ -6,8 +6,8 @@
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 
 ;; emacs 23 requires newer version of org-mode than default, e.g:
-;; $ git checkout git://orgmode.org/org-mode.git ext/org-mode/
-;; A tag like release_7.5 definitely works in emacs 23
+;; $ git clone git://orgmode.org/org-mode.git ext/org-mode/
+;; A checkout of a tag like release_7.5 definitely works in emacs 23
 (if (< emacs-major-version 24)
     (add-to-list 'load-path (expand-file-name
                              "lisp" (expand-file-name
