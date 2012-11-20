@@ -259,7 +259,9 @@ Store singular .el files in root of ext/ directory
 *** Theme load-path
 For emacs 24 builtin theming thing
 #+begin_src emacs-lisp
-(add-to-list 'custom-theme-load-path (expand-file-name "ext" dotfiles-dir))
+(if (boundp 'custom-theme-load-path)
+    ;; Only run for emacs >24
+    (add-to-list 'custom-theme-load-path (expand-file-name "ext" dotfiles-dir)))
 #+end_src
 * Misc modules
 ** Theme
