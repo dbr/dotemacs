@@ -362,8 +362,7 @@ http://julien.danjou.info/rainbow-mode.html
 *** Load code
 #+begin_src emacs-lisp
 (require 'yasnippet)
-(yas/initialize)
-(yas/load-directory (expand-file-name "snippets" (expand-file-name "yasnippet-0.6.1c" (expand-file-name "ext" dotfiles-dir))))
+(yas/global-mode 1)
 #+end_src
 *** Custom snippet dir
 #+begin_src emacs-lisp
