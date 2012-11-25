@@ -368,6 +368,18 @@ http://julien.danjou.info/rainbow-mode.html
 #+begin_src emacs-lisp
 (yas/load-directory (expand-file-name "snippets" dotfiles-dir))
 #+end_src
+*** Change completion UI
+Use text-based yas-dropdown-prompt, as it shows all the snippets most
+clearly, and allows selecition via numbers.
+
+The default dialog in Cocoa is similar, but selection only works with
+arrows/return. The yas-ido-prompt doesn't work well because all the
+snippets are similarly named
+
+#+begin_src emacs-lisp
+(require 'dropdown-list)
+(setq yas-prompt-functions '(yas-dropdown-prompt))
+#+end_src
 *** Make it work in org-mode
 org-mode's tab overriding prevents yasnippet from working
 
