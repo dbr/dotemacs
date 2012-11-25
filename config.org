@@ -247,7 +247,7 @@ Store singular .el files in root of ext/ directory
 (dolist
     (d '(
          "google-maps"
-         "yasnippet-0.6.1c"
+         "yasnippet"
          "multi-term"
          "restclient"
          "magit"
