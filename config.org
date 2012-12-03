@@ -273,6 +273,21 @@ For emacs 24 builtin theming thing
     ;; Only run for emacs >24
     (add-to-list 'custom-theme-load-path (expand-file-name "ext" dotfiles-dir)))
 #+end_src
+* Environment vars
+Executes .bashrc and pulls $PATH, $MANPATH and $PYTHONPATH into emacs
+env.
+
+Allows opening Emacs.app normally, while retaining $PATH. Other way is
+to open by running "open -a Emacs" in the shell, but this is tidier
+
+https://github.com/purcell/exec-path-from-shell
+
+#+begin_src emacs-lisp
+(require 'exec-path-from-shell)
+(setq exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH"))
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+#+end_src
 * Misc modules
 ** Theme
 *** Gunmetal (disabled)
