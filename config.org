@@ -154,6 +154,16 @@ More sane scrolling with OS X mouse/trackpad
 (global-set-key [triple-wheel-down] (lambda () (interactive) (scroll-up-command 4)))
 (global-set-key [triple-wheel-up] (lambda () (interactive) (scroll-down-command 4)))
 #+end_src
+** Cursor
+*** Make cursor a vertical bar
+#+begin_src emacs-lisp
+(setq-default cursor-type 'bar)
+#+end_src
+
+*** Disable cursor blinking
+#+begin_src emacs-lisp
+(blink-cursor-mode 0)
+#+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
