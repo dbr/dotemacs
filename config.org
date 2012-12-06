@@ -156,13 +156,20 @@ More sane scrolling with OS X mouse/trackpad
 #+end_src
 ** Cursor
 *** Make cursor a vertical bar
+Bar makes C-x r t and other box-related behaviour easier to intuit
 #+begin_src emacs-lisp
 (setq-default cursor-type 'bar)
 #+end_src
-
 *** Disable cursor blinking
+<blink>For no particular reason</blink>
 #+begin_src emacs-lisp
 (blink-cursor-mode 0)
+#+end_src
+*** Cursor in other buffers
+Use hollow box in inactive windows, as the disabled bar cursor looks
+identical in disabled windows.
+#+begin_src emacs-lisp
+(setq cursor-in-non-selected-windows 'hollow)
 #+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
