@@ -169,7 +169,7 @@ Bar makes C-x r t and other box-related behaviour easier to intuit
 Use hollow box in inactive windows, as the disabled bar cursor looks
 identical in disabled windows.
 #+begin_src emacs-lisp
-(setq cursor-in-non-selected-windows 'hollow)
+(setq-default cursor-in-non-selected-windows 'hollow)
 #+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
