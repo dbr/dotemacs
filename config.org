@@ -852,6 +852,20 @@ https://github.com/sabof/stripe-buffer
 (autoload 'stripe-buffer-mode "stripe-buffer.el" nil t)
 (add-hook 'dired-mode-hook 'stripe-buffer-mode)
 #+end_src
+** rST mode tweaks
+Tweaks for rST mode
+
+Docs for the mode,
+http://docutils.sourceforge.net/docs/user/emacs.html
+
+
+#+begin_src emacs-lisp
+(setq rst-preferred-decorations
+      '((?= simple 0)
+        (?* simple 0)
+        (?+ simple 0)
+        (?- simple 0)))
+#+end_src
 * Laptop keyboard specific stuff
 * Notes
 ** rgb to hex function
