@@ -804,6 +804,23 @@ http://philjackson.github.com/magit/magit.html
 #+begin_src emacs-lisp
 (global-set-key "\C-ci" 'magit-status)
 #+end_src
+*** Fullscreen status
+http://whattheemacsd.com/setup-magit.el-01.html
+
+#+begin_src emacs-lisp
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defun magit-quit-session ()
+  "Restores the previous window configuration and kills the magit buffer"
+  (interactive)
+  (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+
+(define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+#+end_src
 ** multiple-cursors
 Multiple cursors, for editing multiple lines.
 
