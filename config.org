@@ -367,6 +367,15 @@ Super+ctrl+arrows
 
 (global-set-key [(super return)] 'make-newline-after-current)
 #+end_src
+** M-j joins line
+Joins next line onto current one, like vim's 'shift+j'
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-j")
+            (lambda ()
+                  (interactive)
+                  (join-line -1)))
+#+end_src
 ** Undo-tree
 #+begin_src emacs-lisp
 (require 'undo-tree)
