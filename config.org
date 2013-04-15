@@ -263,6 +263,7 @@ Store singular .el files in root of ext/ directory
          "restclient"
          "magit"
          "multiple-cursors"
+         "emacs-jabber"
          ))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
 #+end_src
@@ -871,6 +872,36 @@ http://docutils.sourceforge.net/docs/user/emacs.html
         (?+ simple 0)
         (?- simple 0)))
 #+end_src
+** jabber
+*** Initialise
+#+begin_src emacs-lisp
+(setq fsm-debug nil) ;; Disable fms-debug buffer
+(require 'jabber-autoloads)
+
+(setq jabber-chat-fill-long-line nil)
+#+end_src
+*** Status in title
+Shows status in top bar if not "online" (away/XA etc)
+#+begin_src emacs-lisp
+;; Show status in message if not online
+(setq jabber-chat-header-line-format
+      '(" " (:eval (jabber-jid-displayname jabber-chatting-with))
+	" " (:eval (jabber-jid-resource jabber-chatting-with)) "\t";
+	(:eval (let ((buddy (jabber-jid-symbol jabber-chatting-with)))
+		 (propertize
+		  (or
+		   (cdr (assoc (get buddy 'show) jabber-presence-strings))
+		   (get buddy 'show))
+		  'face
+		  (or (cdr (assoc (get buddy 'show) jabber-presence-faces))
+		      'jabber-roster-user-online))))
+	"\t" (:eval (get (jabber-jid-symbol jabber-chatting-with) 'status))
+	(:eval (unless (equal "" *jabber-current-show*)
+		 (concat "\t (You're " *jabber-current-show* ")")))))
+
+#+end_src
+*** Order 'chatty' not-first
+(setq jabber-sort-order (quote ("" "away" "dnd" "xa")))
 * Laptop keyboard specific stuff
 * Notes
 ** rgb to hex function
