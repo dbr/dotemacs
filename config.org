@@ -902,6 +902,17 @@ Shows status in top bar if not "online" (away/XA etc)
 #+end_src
 *** Order 'chatty' not-first
 (setq jabber-sort-order (quote ("" "away" "dnd" "xa")))
+*** Misc settings
+#+begin_src emacs-lisp
+;(setq jabber-alert-message-hooks (quote (jabber-message-echo jabber-message-scroll)) t)
+;(setq jabber-connection-ssl-program nil)
+
+(setq jabber-alert-presence-hooks nil)
+(setq jabber-backlog-number 30)
+(setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
+(setq jabber-roster-show-bindings nil)
+(setq jabber-show-offline-contacts nil)
+#+end_src
 * Laptop keyboard specific stuff
 * Notes
 ** rgb to hex function
