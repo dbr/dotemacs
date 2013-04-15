@@ -1543,6 +1543,14 @@
      (riece-modeline-history-face ((t (nil))))
      (riece-modeline-unread-face ((t (nil))))
 
+
+     (jabber-roster-user-online ((t (:foreground "#3b6c4a"))))
+     (jabber-roster-user-dnd ((t (:foreground "#841b1b"))))
+     (jabber-roster-user-away ((t (:foreground "grey30"))))
+     (jabber-chat-prompt-local ((t (:foreground "#526cae"))))
+     (jabber-chat-prompt-foreign ((t (:foreground "#c6a542"))))
+     (jabber-rare-time-face ((t (:foreground "#3e823a"))))
+
      (rst-level-1-face ((t (:background "black"))))
      (rst-level-2-face ((t (:background "grey30"))))
      (zmacs-region ((t (:background "grey30")))))))

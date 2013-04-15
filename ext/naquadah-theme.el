@@ -177,7 +177,17 @@
    '(rst-level-1-face ((t (:inherit org-level-1 :background nil))))
    '(rst-level-2-face ((t (:inherit org-level-2 :background nil))))
    '(rst-level-3-face ((t (:inherit org-level-3 :background nil))))
-   '(rst-level-4-face ((t (:inherit org-level-4 :background nil))))))
+   '(rst-level-4-face ((t (:inherit org-level-4 :background nil))))
+
+   '(jabber-roster-user-online ((t (:foreground "#3b6c4a"))))
+   '(jabber-roster-user-dnd ((t (:foreground "#841b1b"))))
+   '(jabber-roster-user-away ((t (:foreground "grey30"))))
+   '(jabber-chat-prompt-local ((t (:foreground "#526cae"))))
+   '(jabber-chat-prompt-foreign ((t (:foreground "#c6a542"))))
+   '(jabber-rare-time-face ((t (:foreground "#3e823a"))))
+   '(jabber-roster-user-chatty ((t (:foreground "#3b6c4a"))))
+
+))
 
 (provide-theme 'naquadah)
 
