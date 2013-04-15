@@ -25,8 +25,6 @@
 (require 'jabber-alert)
 (require 'jabber-keymap)
 (require 'format-spec)
-(require 'cl)				;for `find'
-(require 'jabber-private)
 
 (defgroup jabber-roster nil "roster display options"
   :group 'jabber)
@@ -155,17 +153,7 @@ Trailing newlines are always removed, regardless of this variable."
 (defcustom jabber-roster-default-group-name "other"
   "Default group name for buddies without groups."
   :group 'jabber-roster
-  :type 'string
-  :get '(lambda (var)
-	  (let ((val (symbol-value var)))
-	    (when (stringp val)
-	      (set-text-properties 0 (length val) nil val))
-	    val))
-  :set '(lambda (var val)
-          (when (stringp val)
-	    (set-text-properties 0 (length val) nil val))
-          (custom-set-default var val))
-  )
+  :type 'string)
 
 (defcustom jabber-roster-show-empty-group nil
   "Show empty groups in roster?"
@@ -221,10 +209,10 @@ Trailing newlines are always removed, regardless of this variable."
     (suppress-keymap map)
     (set-keymap-parent map jabber-common-keymap)
     (define-key map [mouse-2] 'jabber-roster-mouse-2-action-at-point)
-    (define-key map (kbd "TAB") 'jabber-go-to-next-roster-item)
-    (define-key map (kbd "S-TAB") 'jabber-go-to-previous-roster-item)
-    (define-key map (kbd "M-TAB") 'jabber-go-to-previous-roster-item)
-    (define-key map (kbd "<backtab>") 'jabber-go-to-previous-roster-item)
+    (define-key map (kbd "TAB") 'jabber-go-to-next-jid)
+    (define-key map (kbd "S-TAB") 'jabber-go-to-previous-jid)
+    (define-key map (kbd "M-TAB") 'jabber-go-to-previous-jid)
+    (define-key map (kbd "<backtab>") 'jabber-go-to-previous-jid)
     (define-key map (kbd "RET") 'jabber-roster-ret-action-at-point)
     (define-key map (kbd "C-k") 'jabber-roster-delete-at-point)
 
@@ -232,7 +220,7 @@ Trailing newlines are always removed, regardless of this variable."
     (define-key map "s" 'jabber-send-subscription-request)
     (define-key map "q" 'bury-buffer)
     (define-key map "i" 'jabber-get-disco-items)
-    (define-key map "j" 'jabber-muc-join)
+    (define-key map "j" 'jabber-groupchat-join)
     (define-key map "I" 'jabber-get-disco-info)
     (define-key map "b" 'jabber-get-browse)
     (define-key map "v" 'jabber-get-version)
@@ -251,32 +239,10 @@ chat-with-jid-at-point is no group at point"
   (let ((group-at-point (get-text-property (point)
 					   'jabber-group))
 	(account-at-point (get-text-property (point)
-					     'jabber-account))
-        (jid-at-point (get-text-property (point)
-					 'jabber-jid)))
+					     'jabber-account)))
     (if (and group-at-point account-at-point)
 	(jabber-roster-roll-group account-at-point group-at-point)
-      ;; Is this a normal contact, or a groupchat?  Let's ask it.
-      (jabber-disco-get-info
-       account-at-point (jabber-jid-user jid-at-point) nil
-       #'jabber-roster-ret-action-at-point-1
-       jid-at-point))))
-
-(defun jabber-roster-ret-action-at-point-1 (jc jid result)
-  ;; If we get an error, assume it's a normal contact.
-  (if (eq (car result) 'error)
-      (jabber-chat-with jc jid)
-    ;; Otherwise, let's check whether it has a groupchat identity.
-    (let ((identities (car result)))
-      (if (find "conference" (if (sequencep identities) identities nil)
-		:key (lambda (i) (aref i 1))
-		:test #'string=)
-	  ;; Yes!  Let's join it.
-	  (jabber-muc-join jc jid
-			   (jabber-muc-read-my-nickname jc jid t)
-			   t)
-	;; No.  Let's open a normal chat buffer.
-	(jabber-chat-with jc jid)))))
+      (jabber-chat-with-jid-at-point))))
 
 (defun jabber-roster-mouse-2-action-at-point (e)
   "Action for mouse-2. Before try to roll up/down group. Eval
@@ -330,29 +296,21 @@ Eval `jabber-roster-change' is no group at point"
 					      group-at-point))
       (call-interactively 'jabber-roster-change))))
 
-(defun jabber-roster-roll-group (jc group-name &optional set)
-  "Roll up/down group in roster.
-If optional SET is t, roll up group.
-If SET is nor t or nil, roll down group."
+(defun jabber-roster-roll-group (jc group-name)
+  "Roll up/down group in roster"
   (let* ((state-data (fsm-get-state-data jc))
-	 (roll-groups (plist-get state-data :roster-roll-groups))
-         (new-roll-groups (if (find group-name roll-groups :test 'string=)
-                              ;; group is rolled up, roll it down if needed
-                              (if (or (not set) (and set (not (eq set t))))
-                                  (remove-if-not (lambda (group-name-in-list)
-                                                   (not (string= group-name
-                                                                 group-name-in-list)))
-                                                 roll-groups)
-                                roll-groups)
-                            ;; group is rolled down, roll it up if needed
-                            (if (or (not set) (and set (eq set t)))
-                                (append roll-groups (list group-name))
-                              roll-groups))) )
-    (unless (equal roll-groups new-roll-groups)
-      (plist-put
-       state-data :roster-roll-groups
-       new-roll-groups)
-      (jabber-display-roster))))
+	 (roll-groups (plist-get state-data
+				 :roster-roll-groups)))
+    (plist-put
+     state-data :roster-roll-groups
+     (if (find group-name roll-groups
+	       :test 'string=)
+	 (remove-if-not (lambda (group-name-in-list)
+			  (not (string= group-name
+					group-name-in-list)))
+			roll-groups)
+       (append roll-groups (list group-name)))))
+  (jabber-display-roster))
 
 (defun jabber-roster-mode ()
   "Major mode for Jabber roster display.
@@ -498,8 +456,7 @@ such.")
 		 buddies))
 
 (defun jabber-roster-toggle-offline-display ()
-  "Toggle display of offline contacts.
-To change this permanently, customize the `jabber-show-offline-contacts'."
+  "Toggle display of offline contacts."
   (interactive)
   (setq jabber-show-offline-contacts
 	(not jabber-show-offline-contacts))
@@ -818,75 +775,29 @@ three being lists of JID symbols."
 ;;Its work is done in `jabber-process-presence'."
 (make-obsolete 'jabber-presence-update-roster 'ignore)
 
-(defun jabber-next-property (&optional prev)
-  "Return position of next property appearence or nil if there is none.
-If optional PREV is non-nil, return position of previous property appearence."
-  (let ((pos (point))
-        (found nil)
-        (nextprev (if prev 'previous-single-property-change
-                    'next-single-property-change)))
-    (while (not found)
-      (setq pos
-            (let ((jid (funcall nextprev pos 'jabber-jid))
-                  (group (funcall nextprev pos 'jabber-group)))
-              (cond
-               ((not jid) group)
-               ((not group) jid)
-               (t (funcall (if prev 'max 'min) jid group)))))
-      (if (not pos)
-          (setq found t)
-        (setq found (or (get-text-property pos 'jabber-jid)
-                        (get-text-property pos 'jabber-group)))))
-    pos))
-
-(defun jabber-go-to-next-roster-item ()
-  "Move the cursor to the next jid/group in the buffer"
+(defun jabber-go-to-next-jid ()
+  "Move the cursor to the next jid in the buffer"
   (interactive)
-  (let* ((next (jabber-next-property))
-         (next (if (not next)
-                   (progn (goto-char (point-min))
-                          (jabber-next-property)) next)))
-    (if next (goto-char next)
+  (let ((next (next-single-property-change (point) 'jabber-jid)))
+    (when (and next
+	       (not (get-text-property next 'jabber-jid)))
+      (setq next (next-single-property-change next 'jabber-jid)))
+    (unless next
+      (setq next (next-single-property-change (point-min) 'jabber-jid)))
+    (if next (goto-char (1+ next))
       (goto-char (point-min)))))
 
-(defun jabber-go-to-previous-roster-item ()
-  "Move the cursor to the previous jid/group in the buffer"
+(defun jabber-go-to-previous-jid ()
+  "Move the cursor to the previous jid in the buffer"
   (interactive)
-  (let* ((previous (jabber-next-property 'prev))
-         (previous (if (not previous)
-                       (progn (goto-char (point-max))
-                              (jabber-next-property 'prev)) previous)))
+  (let ((previous (previous-single-property-change (point) 'jabber-jid)))
+    (when (and previous
+	       (not (get-text-property previous 'jabber-jid)))
+      (setq previous (previous-single-property-change previous 'jabber-jid)))
+    (unless previous
+      (setq previous (previous-single-property-change (point-max) 'jabber-jid)))
     (if previous (goto-char previous)
       (goto-char (point-max)))))
-
-(defun jabber-roster-restore-groups (jc)
-  "Restore roster's groups rolling state from private storage"
-  (interactive (list (jabber-read-account)))
-  (jabber-private-get jc 'roster "emacs-jabber"
-                      'jabber-roster-restore-groups-1 'ignore))
-
-(defun jabber-roster-restore-groups-1 (jc xml-data)
-  "Parse roster groups and restore rolling state"
-  (when (string= (jabber-xml-get-xmlns xml-data) "emacs-jabber")
-    (let* ((data (car (last xml-data)))
-           (groups (if (stringp data) (split-string data "\n") nil)))
-      (dolist (group groups)
-        (jabber-roster-roll-group jc group t)))))
-
-(defun jabber-roster-save-groups ()
-  "Save roster's groups rolling state in private storage"
-  (interactive)
-  (dolist (jc jabber-connections)
-    (let* ((groups (plist-get (fsm-get-state-data jc) :roster-roll-groups))
-           (roll-groups
-            (if groups
-                (mapconcat (lambda (a) (substring-no-properties a)) groups "\n")
-              "")))
-      (jabber-private-set jc
-                          `(roster ((xmlns . "emacs-jabber"))
-                                   ,roll-groups)
-                          'jabber-report-success "Roster groups saved"
-                          'jabber-report-success "Failed to save roster groups"))))
 
 (provide 'jabber-roster)
 

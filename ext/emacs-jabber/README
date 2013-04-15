@@ -1,4 +1,4 @@
-This is jabber.el 0.8.91, a Jabber client for Emacs.  Jabber (also known
+This is jabber.el 0.8, a Jabber client for Emacs.  Jabber (also known
 as XMPP) is an instant messaging system; see http://www.jabber.org for
 more information.
 
@@ -12,12 +12,12 @@ MUC room:     jabber.el@conference.jabber.se and emacs@conference.jabber.ru (Rus
 GNU Emacs
 =========
 
-jabber.el runs on GNU Emacs 23.1 or later.
+jabber.el depends on GNU Emacs (21, 22, 23 works fine), in particular
+xml.el, and some files from Gnus 5.10. If you don't have Gnus 5.10
+(M-x gnus-version will tell), you can get sha1.el and hex-util.el
+from the compat subdirectory.  (The configure script tries to detect
+this situation and include the files in the build)
 
-The file hexrgb.el (http://www.emacswiki.org/emacs/hexrgb.el) is
-needed for MUC nick coloring feature.  A copy is located in the compat
-directory, and used if the configure script doesn't find another copy
-already installed.
 
 XEmacs
 ======
@@ -27,37 +27,30 @@ net-utils and mule-ucs packages.  jabber.el basically works on XEmacs,
 but some features are missing (in particular mouse support).  Testing
 and patches are very welcome.
 
-Encrypted connections
-=====================
-Many Jabber servers require encrypted connections, and even if yours
-doesn't it may be good idea.  To get an encrypted connection, the most
-convenient option is to use GNU Emacs 24 with GnuTLS support compiled
-in.  You can check whether you have that by typing:
+SASL
+====
+jabber.el will use the SASL library of Emacs (from version 23) or Gnus
+(from No Gnus 0.3) if it's present.  If not, it will fall back to
+XEP-0077 authentication.
 
-M-: (gnutls-available-p)
+TLS/SSL
+=======
+To get an encrypted connection, the most convenient option is to use
+starttls.el (from Emacs 22 or Gnus 5.10).  This requires GnuTLS (in
+particular the command line tool gnutls-cli) to be installed, but
+requires no configuration at all.
 
-If that commands shows `t' in the echo area, then you have working
-GnuTLS support.  If it shows `nil' or signals an error, then you
-don't.
-
-Failing that, jabber.el will use the starttls.el library, which
-requires that the GnuTLS command line tool "gnutls-cli" is installed.
-In Debian-based distributions, "gnutls-cli" is in the "gnutls-bin"
-package.
-
-The above applies to STARTTLS connections, the most common way to
-encrypt a Jabber connection and the only one specified in the
-standards.  STARTTLS connections start out unencrypted, but switch to
-encrypted after negotiation.  jabber.el also supports connections that
-are encrypted from start.  For this it uses the tls.el library, which
-requires either "gnutls-cli" or the OpenSSL command line tool
-"openssl" to be installed.
+You can also use either tls.el (from Emacs 22 or Gnus 5.10) or ssl.el.
+These are interfaces to GnuTLS and OpenSSL, respectively; use the
+appropriate one.  Recent versions of tls.el support both programs,
+though.  The version of ssl.el distributed with Gnus is outdated; use
+the one from W3 CVS instead:
+http://cvs.savannah.gnu.org/viewcvs/w3/lisp/ssl.el?root=w3
 
 To use the latter form of encryption, customize jabber-account-list.
 
 Note that only the connection from you to the server is encrypted;
-there is no guarantee of connections from your server to your
-contacts' server being encrypted.
+there is no guarantee of other connections being encrypted.
 
 Installation
 ============
@@ -75,15 +68,15 @@ they're in.  To install the Info documentation, copy jabber.info to
 /usr/local/info and run "install-info /usr/local/info/jabber.info".
 
 After installation by either method, add (load "jabber-autoloads") to
-your .emacs file.  (If you got the code from GIT, you still need the
+your .emacs file.  (If you got the code from CVS, you still need the
 makefile to generate jabber-autoloads.el.)
 
 If you are upgrading from 0.7-0.7.x, you need to update your
 configuration.  See the section "Account settings" in the manual.
 
-Special notes for GIT version
+Special notes for CVS version
 =============================
-If you are running jabber.el from GIT, you need to generate the
+If you are running jabber.el from CVS, you need to generate the
 jabber-autoloads.el file yourself.  The simplest way to do this is by
 using the "./configure && make" process.
 

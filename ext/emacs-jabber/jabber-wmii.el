@@ -35,13 +35,13 @@
       (call-process "wmiir" nil nil nil "remove" "/rbar/jabber")
     (error nil)))
   
-(defun jabber-wmii-message (text &optional title)
+(defun jabber-wmii-message (msg)
   "Show MSG in wmii."
   (when jabber-wmii-timer
     (cancel-timer jabber-wmii-timer))
   (let ((tmp (make-temp-file temporary-file-directory)))
     (with-temp-file tmp
-      (insert  jabber-wmii-color " " (or title text)))
+      (insert  jabber-wmii-color " " msg))
     ;; Possible errors include not finding the wmiir binary, and
     ;; too many pipes open because of message flood.
     (condition-case e

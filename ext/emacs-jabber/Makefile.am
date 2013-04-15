@@ -1,11 +1,11 @@
 ACLOCAL_AMFLAGS = -I m4
 # The following line needs to be here since automake 1.4 doesn't look
 # for options in configure.ac.
-AUTOMAKE_OPTIONS = 1.11
+AUTOMAKE_OPTIONS = 1.9
 
 my_lisp_sources=fsm.el jabber-activity.el jabber-ahc-presence.el	\
 jabber-ahc.el jabber-alert.el jabber-autoaway.el jabber-avatar.el	\
-jabber-awesome.el jabber-ping.el jabber-libnotify.el jabber-console.el	\
+jabber-awesome.el							\
 jabber-bookmarks.el jabber-browse.el jabber-chat.el			\
 jabber-chatbuffer.el jabber-chatstates.el jabber-compose.el		\
 jabber-conn.el jabber-core.el jabber-disco.el jabber-events.el		\
@@ -21,10 +21,17 @@ jabber-si-common.el jabber-si-server.el jabber-socks5.el		\
 jabber-time.el jabber-truncate.el jabber-util.el			\
 jabber-vcard-avatars.el jabber-vcard.el jabber-version.el		\
 jabber-watch.el jabber-widget.el jabber-wmii.el jabber-xmessage.el	\
-jabber-muc-nick-coloring.el						\
-jabber-xml.el jabber.el srv.el jabber-tmux.el
+jabber-xml.el jabber.el srv.el
 
-compat_lisp_sources = jabber-fallback-lib/hexrgb.el
+compat_lisp_sources =
+if USE_OUR_SHA1
+compat_lisp_sources += compat/sha1.el
+endif
+if USE_OUR_HEX_UTIL
+compat_lisp_sources += compat/hex-util.el
+endif
+# automake gets confused and doesn't clean up these two compiled files.
+CLEANFILES=sha1.elc hex-util.elc
 
 dist_lisp_LISP=$(my_lisp_sources) $(compat_lisp_sources) jabber-autoloads.el jabber-ourversion.el
 MAINTAINERCLEANFILES=jabber-autoloads.el
@@ -56,12 +63,11 @@ endif
 
 # Package everything in a form suitable for ELPA.  That is, use
 # "jabber" instead of "emacs-jabber" as base name.
-CLEANFILES = jabber-pkg.el
+CLEANFILES += jabber-pkg.el
 elpa: dist
 	rm -rf emacs-jabber-$(PACKAGE_VERSION) jabber-$(PACKAGE_VERSION)
 	$(AMTAR) xzf emacs-jabber-$(PACKAGE_VERSION).tar.gz
 	mv emacs-jabber-$(PACKAGE_VERSION) jabber-$(PACKAGE_VERSION)
-	rm -rf jabber-$(PACKAGE_VERSION)/tests
 	cd jabber-$(PACKAGE_VERSION) ; install-info jabber.info dir
 	sed "s/@""PACKAGE_VERSION@""/$(PACKAGE_VERSION)/" < $(srcdir)/jabber-pkg.el.in > jabber-$(PACKAGE_VERSION)/jabber-pkg.el
 	$(AMTAR) chf jabber-$(PACKAGE_VERSION).tar jabber-$(PACKAGE_VERSION)

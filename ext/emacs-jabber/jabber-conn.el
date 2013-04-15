@@ -27,9 +27,6 @@
 
 (eval-when-compile (require 'cl))
 
-;; Emacs 24 can be linked with GnuTLS
-(ignore-errors (require 'gnutls))
-
 ;; Try two different TLS/SSL libraries, but don't fail if none available.
 (or (ignore-errors (require 'tls))
     (ignore-errors (require 'ssl)))
@@ -48,13 +45,11 @@
 
 (defun jabber-have-starttls ()
   "Return true if we can use STARTTLS."
-  (or (and (fboundp 'gnutls-available-p)
-	   (gnutls-available-p))
-      (and (featurep 'starttls)
-	   (or (and (bound-and-true-p starttls-gnutls-program)
-		    (executable-find starttls-gnutls-program))
-	       (and (bound-and-true-p starttls-program)
-		    (executable-find starttls-program))))))
+  (and (featurep 'starttls)
+       (or (and (bound-and-true-p starttls-gnutls-program)
+		(executable-find starttls-gnutls-program))
+	   (and (bound-and-true-p starttls-program)
+		(executable-find starttls-program)))))
 
 (defconst jabber-default-connection-type 
   (cond
@@ -77,19 +72,9 @@ nil means prefer gnutls but fall back to openssl.
 		 (const :tag "Use openssl" openssl))
   :group 'jabber-conn)
 
-(defcustom jabber-invalid-certificate-servers ()
-  "Jabber servers for which we accept invalid TLS certificates.
-This is a list of server names, each matching the hostname part
-of your JID.
-
-This option has effect only when using native GnuTLS in Emacs 24
-or later."
-  :type '(repeat string)
-  :group 'jabber-conn)
-
 (defvar jabber-connect-methods
   '((network jabber-network-connect jabber-network-send)
-    (starttls jabber-starttls-connect jabber-network-send)
+    (starttls jabber-starttls-connect jabber-ssl-send)
     (ssl jabber-ssl-connect jabber-ssl-send)
     (virtual jabber-virtual-connect jabber-virtual-send))
   "Alist of connection methods and functions.
@@ -181,19 +166,14 @@ connection fails."
 	   (error "Neither TLS nor SSL connect functions available")))))
     (let ((process-buffer (generate-new-buffer jabber-process-buffer))
 	  connection)
-      (setq network-server (or network-server server))
-      (setq port (or port 5223))
-      (condition-case e
+      (unwind-protect
 	  (setq connection (funcall connect-function
 				    "jabber"
 				    process-buffer
-				    network-server
-				    port))
-	(error
-	 (message "Couldn't connect to %s:%d: %s" network-server port
-		  (error-message-string e))))
-      (unless (or connection jabber-debug-keep-process-buffers)
-	(kill-buffer process-buffer))
+				    (or network-server server)
+				    (or port 5223)))
+	(unless (or connection jabber-debug-keep-process-buffers)
+	  (kill-buffer process-buffer)))
       (if connection
 	  (fsm-send fsm (list :connected connection))
 	(fsm-send fsm :connection-failed)))))
@@ -211,19 +191,9 @@ connection succeeds.  Send a message :connection-failed if
 connection fails."
   (let ((coding-system-for-read 'utf-8)
 	(coding-system-for-write 'utf-8)
-	(targets (jabber-srv-targets server network-server port))
-	(connect-function
-	 (cond
-	  ((and (fboundp 'gnutls-available-p)
-		(gnutls-available-p))
-	   (lambda (buffer host port)
-	     (open-network-stream "jabber" buffer host port)))
-	  ((fboundp 'starttls-open-stream)
-	   (lambda (buffer host port)
-	     (starttls-open-stream "jabber" buffer host port)))
-	  (t
-	   (error "Neither native GnuTLS nor starttls.el available")))))
-    
+	(targets (jabber-srv-targets server network-server port)))
+    (unless (fboundp 'starttls-open-stream)
+      (error "starttls.el not available"))
     (catch 'connected
       (dolist (target targets)
 	(condition-case e
@@ -231,10 +201,11 @@ connection fails."
 		  connection)
 	      (unwind-protect
 		  (setq connection
-			(funcall connect-function
-				 process-buffer
-				 (car target)
-				 (cdr target)))
+			(starttls-open-stream
+			 "jabber"
+			 process-buffer
+			 (car target)
+			 (cdr target)))
 		(unless (or connection jabber-debug-keep-process-buffers)
 		  (kill-buffer process-buffer)))
 	      (when connection
@@ -252,31 +223,12 @@ connection fails."
 
 (defun jabber-starttls-process-input (fsm xml-data)
   "Process result of starttls request.
-On failure, signal error."
+Return non-nil on success, nil on failure."
   (cond
    ((eq (car xml-data) 'proceed)
-    (let* ((state-data (fsm-get-state-data fsm))
-	   (connection (plist-get state-data :connection)))
-      ;; Did we use open-network-stream or starttls-open-stream?  We
-      ;; can tell by process-type.
-      (case (process-type connection)
-	(network
-	 (let* ((hostname (plist-get state-data :server))
-		(verifyp (not (member hostname jabber-invalid-certificate-servers))))
-	   ;; gnutls-negotiate might signal an error, which is caught
-	   ;; by our caller
-	   (gnutls-negotiate
-	    :process connection
-	    ;; This is the hostname that the certificate should be valid for:
-	    :hostname hostname
-	    :verify-hostname-error verifyp
-	    :verify-error verifyp)))
-	(real
-	 (or
-	  (starttls-negotiate connection)
-	  (error "Negotiation failure"))))))
+    (starttls-negotiate (plist-get (fsm-get-state-data fsm) :connection)))
    ((eq (car xml-data) 'failure)
-    (error "Command rejected by server"))))
+    nil)))
 
 (defvar *jabber-virtual-server-function* nil
   "Function to use for sending stanzas on a virtual connection.

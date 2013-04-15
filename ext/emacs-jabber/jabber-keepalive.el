@@ -26,8 +26,6 @@
 ;;; server every X minutes, and considers the connection broken if
 ;;; they get no answer within Y seconds.
 
-(require 'jabber-ping)
-
 ;;;###autoload
 (defgroup jabber-keepalive nil
   "Keepalive functions try to detect lost connection"
@@ -97,7 +95,11 @@ for all accounts regardless of the argument."
   (dolist (c jabber-connections)
     ;; Whether we get an error or not is not interesting.
     ;; Getting a response at all is.
-    (jabber-ping-send c nil 'jabber-keepalive-got-response nil nil)))
+    (jabber-send-iq c nil "get"
+		    ;; "ping" is XEP-0199
+		    '(query ((xmlns . "urn:xmpp:ping")))
+		    'jabber-keepalive-got-response nil
+		    'jabber-keepalive-got-response nil)))
 
 (defun jabber-keepalive-got-response (jc &rest args)
   (when jabber-keepalive-debug
@@ -105,7 +107,7 @@ for all accounts regardless of the argument."
 	     (current-time-string)
 	     (plist-get (fsm-get-state-data jc) :server)))
   (setq jabber-keepalive-pending (remq jc jabber-keepalive-pending))
-  (when (and (null jabber-keepalive-pending) (timerp jabber-keepalive-timeout-timer))
+  (when (null jabber-keepalive-pending)
     (jabber-cancel-timer jabber-keepalive-timeout-timer)
     (setq jabber-keepalive-timeout-timer nil)))
 

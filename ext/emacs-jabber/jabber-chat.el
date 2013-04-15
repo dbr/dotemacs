@@ -278,11 +278,10 @@ This function is idempotent."
 	     (cons "Display more context" 'jabber-chat-display-more-backlog))
 
 (defun jabber-chat-display-more-backlog (how-many)
-  "Display more context. HOW-MANY is number of messages. Specify 0 to display all messages."
-  (interactive "nHow many more messages (Specify 0 to display all)? ")
+  (interactive "nHow many more messages? ")
   (let* ((inhibit-read-only t)
 	 (jabber-backlog-days nil)
-	 (jabber-backlog-number (if (= how-many 0) t how-many))
+	 (jabber-backlog-number how-many)
 	 (backlog-entries (jabber-history-backlog
 			   jabber-chatting-with jabber-chat-earliest-backlog)))
     (when backlog-entries

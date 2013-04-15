@@ -27,6 +27,8 @@
 (require 'jabber-muc)
 (require 'jabber-autoloads)
 
+(require 'assoc)
+
 (defvar jabber-presence-element-functions nil
   "List of functions returning extra elements for <presence/> stanzas.
 Each function takes one argument, the connection, and returns a
@@ -74,8 +76,7 @@ CLOSURE-DATA should be 'initial if initial roster push, nil otherwise."
 	    (if roster-item
 		(push roster-item changed-items)
 	      ;; If not found, create a new roster item.
-	      (unless (eq closure-data 'initial)
-		(message "%s added to roster" jid))
+	      (message "%s added to roster" jid)
 	      (setq roster-item jid)
 	      (push roster-item new-items))
 
@@ -312,7 +313,7 @@ CLOSURE-DATA should be 'initial if initial roster push, nil otherwise."
     ;; Ordinary presence, with no specified recipient
     (dolist (jc jabber-connections)
       (let ((subelements (jabber-presence-children jc)))
-        (push (cons jc subelements) subelements-map)
+	(aput 'subelements-map jc subelements)
 	(jabber-send-sexp-if-connected jc `(presence () ,@subelements))))
 
     ;; Then send presence to groupchats
@@ -322,9 +323,8 @@ CLOSURE-DATA should be 'initial if initial roster push, nil otherwise."
 		   (buffer-local-value 'jabber-buffer-connection buffer)))
 	     (subelements (cdr (assq jc subelements-map))))
 	(when jc
-	  (jabber-send-sexp-if-connected
-	   jc `(presence ((to . ,(concat (car gc) "/" (cdr gc))))
-			 ,@subelements))))))
+	  (jabber-send-sexp-if-connected jc `(presence ((to . ,(car gc)))
+						       ,@subelements))))))
 
   (jabber-display-roster))
 
@@ -487,12 +487,11 @@ text, if specified"
   ;; XXX: specify account
   (jabber-send-iq jc nil "set"
 		  (list 'query (list (cons 'xmlns "jabber:iq:roster"))
-				(append
-				 (list 'item (append
+			(list 'item (append
 				     (list (cons 'jid (symbol-name jid)))
 				     (if (and name (> (length name) 0))
-					 (list (cons 'name name)))))
-				 (mapcar #'(lambda (x) `(group () ,x))
+					 (list (cons 'name name))))
+			      (mapcar #'(lambda (x) `(group () ,x))
 				      groups)))
 		  #'jabber-report-success "Roster item change"
 		  #'jabber-report-success "Roster item change"))
@@ -517,7 +516,7 @@ Signal an error if there is no JID at point."
 					 'jabber-jid))
 	(account (get-text-property (point) 'jabber-account)))
     (if (and jid-at-point account
-	     (or jabber-silent-mode (yes-or-no-p (format "Really delete %s from roster? " jid-at-point))))
+	     (yes-or-no-p (format "Really delete %s from roster? " jid-at-point)))
 	(jabber-roster-delete account jid-at-point)
       (error "No contact at point"))))
 

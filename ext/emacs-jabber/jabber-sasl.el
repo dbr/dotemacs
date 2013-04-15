@@ -43,7 +43,9 @@
 		      (jabber-xml-get-children mechanism-elements 'mechanism)))
 	 (mechanism
 	  (if (and (member "ANONYMOUS" mechanisms)
-		   (or jabber-silent-mode (yes-or-no-p "Use anonymous authentication? ")))
+;; FIXME: Hack to prevent annoying prompt
+;		   (yes-or-no-p "Use anonymous authentication? "))
+           nil)
 	      (sasl-find-mechanism '("ANONYMOUS"))
 	    (sasl-find-mechanism mechanisms))))
 
@@ -127,7 +129,7 @@ Call REMEMBER with the password.  REMEMBER is expected to return it as well."
       (fsm-send jc :authentication-failure))
 
      ((eq (car xml-data) 'success)
-      (message "Authentication succeeded for %s" (jabber-connection-bare-jid jc))
+      (message "Authentication succeeded")
       (fsm-send jc (cons :authentication-success passphrase))))
     (list client step passphrase)))
 

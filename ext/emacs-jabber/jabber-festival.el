@@ -26,7 +26,7 @@
       ;; Most people don't have Festival, so this will often fail
       (require 'festival)
       (define-jabber-alert festival "Voice messages through Festival"
-	(lambda (text &optional title) (festival-say-string (or title text)))))
+	'festival-say-string))
   (error nil))
 
 (provide 'jabber-festival)

@@ -44,12 +44,6 @@ Jabber history files."
   :type 'boolean
   :group 'jabber-history)
 
-(defcustom jabber-history-muc-enabled nil
-  "Non-nil means MUC logging is enabled.
-Default is nil, cause MUC logging may be i/o-intensive."
-  :type 'boolean
-  :group 'jabber-history)
-
 (defcustom jabber-use-global-history t
   "Indicate whether Emacs Jabber should use a global file for
   store messages.  If non-nil, jabber-global-history-filename is
@@ -108,17 +102,13 @@ Default is nil, cause MUC logging may be i/o-intensive."
   (when (and (not jabber-use-global-history)
 	     (not (file-directory-p jabber-history-dir)))
     (make-directory jabber-history-dir))
-  (let ((is-muc (jabber-muc-message-p xml-data)))
-    (if (and jabber-history-enabled
-           (or
-            (not is-muc)                ;chat message or private MUC message
-            (and jabber-history-muc-enabled is-muc))) ;muc message and muc logging active
+  (if (and jabber-history-enabled (not (jabber-muc-message-p xml-data)))
       (let ((from (jabber-xml-get-attribute xml-data 'from))
 	    (text (car (jabber-xml-node-children
 			(car (jabber-xml-get-children xml-data 'body)))))
 	    (timestamp (car (delq nil (mapcar 'jabber-x-delay (jabber-xml-get-children xml-data 'x))))))
 	(when (and from text)
-	  (jabber-history-log-message "in" from nil text timestamp))))))
+	  (jabber-history-log-message "in" from nil text timestamp)))))
 
 (add-hook 'jabber-chat-send-hooks 'jabber-history-send-hook)
 
@@ -138,7 +128,7 @@ Default is nil, cause MUC logging may be i/o-intensive."
   (if jabber-use-global-history
       jabber-global-history-filename
     ;; jabber-jid-symbol is the best canonicalization we have.
-    (concat jabber-history-dir
+    (concat jabber-history-dir 
 	    "/" (symbol-name (jabber-jid-symbol contact)))))
 
 (defun jabber-history-log-message (direction from to body timestamp)
@@ -199,23 +189,16 @@ of the log file."
 	(if jabber-use-global-history
             (insert-file-contents history-file)
           (let* ((lines-collected nil)
-                (matched-files
-		 (directory-files jabber-history-dir t
-				  (concat "^"
-					  (regexp-quote (file-name-nondirectory
-							 history-file)))))
-                (matched-files
-		 (cons (car matched-files)
-		       (sort (cdr matched-files) 'string>-numerical))))
+                (matched-files (directory-files jabber-history-dir t (file-name-nondirectory history-file)))
+                (matched-files (cons (car matched-files) (sort (cdr matched-files) 'string>-numerical))))
             (while (not lines-collected)
               (if (null matched-files)
                   (setq lines-collected t)
                 (let ((file (pop matched-files)))
                   (progn
                     (insert-file-contents file)
-                    (when (numberp number)
-                      (if (>= (count-lines (point-min) (point-max)) number)
-                        (setq lines-collected t))))))))))
+                    (if (>= (count-lines (point-min) (point-max)) number)
+                        (setq lines-collected t)))))))))
       (let (collected current-line)
 	(goto-char (point-max))
 	(catch 'beginning-of-file
@@ -239,7 +222,7 @@ of the log file."
 			   (> end-time (jabber-float-time (jabber-parse-time
 							   (aref current-line 0)))))
 		       (string-match
-			jid-regexp
+			jid-regexp 
 			(car
 			 (remove "me"
 				 (list (aref current-line 2)
@@ -267,7 +250,7 @@ Return a list of history entries (vectors), limited by
 If BEFORE is non-nil, it should be a float-time after which
 no entries will be fetched.  `jabber-backlog-days' still
 applies, though."
-  (jabber-history-query
+  (jabber-history-query 
    (and jabber-backlog-days
 	(- (jabber-float-time) (* jabber-backlog-days 86400.0)))
    before
@@ -317,7 +300,7 @@ applies, though."
 	  (let ((history-file (jabber-history-filename current-jid)))
 	    (write-region jid-start (point-max) history-file t 'quiet))))))
   (message "Done.  Please change `jabber-use-global-history' now."))
-
+	
 (provide 'jabber-history)
 
 ;; arch-tag: 0AA0C235-3FC0-11D9-9FE7-000A95C2FCD0
