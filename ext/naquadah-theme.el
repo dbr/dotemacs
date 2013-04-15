@@ -35,7 +35,7 @@
       (violet-blue "#5337AD")
       (orange "#FFA500")
       (tomato "#FC683A")
-      (background "#252A2B")
+      (background "grey20") ; Originally #252A2B
       (shadow "#888a85"))
   (custom-theme-set-faces
    'naquadah
