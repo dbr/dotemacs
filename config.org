@@ -902,6 +902,11 @@ Shows status in top bar if not "online" (away/XA etc)
 #+end_src
 *** Order 'chatty' not-first
 (setq jabber-sort-order (quote ("" "away" "dnd" "xa")))
+*** Logging settings
+#+begin_src emacs-lisp
+(setq jabber-history-enabled t)
+(setq jabber-use-global-history nil)
+#+end_src
 *** Misc settings
 #+begin_src emacs-lisp
 ;(setq jabber-alert-message-hooks (quote (jabber-message-echo jabber-message-scroll)) t)
