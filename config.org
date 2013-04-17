@@ -827,6 +827,11 @@ http://whattheemacsd.com/setup-magit.el-01.html
   ad-do-it
   (jump-to-register :magit-fullscreen))
 #+end_src
+*** TODO Autoload magit-svn (should autoload magit-svn-mode too)
+#+begin_src emacs-lisp
+(eval-after-load 'magit
+  '(require 'magit-svn))
+#+end_src
 ** multiple-cursors
 Multiple cursors, for editing multiple lines.
 
