@@ -811,6 +811,7 @@ http://philjackson.github.com/magit/magit.html
 (autoload 'magit-status "magit" nil t)
 #+end_src
 *** Custom key-bindings
+C-i i to load magit-status
 #+begin_src emacs-lisp
 (global-set-key "\C-ci" 'magit-status)
 #+end_src
@@ -827,10 +828,11 @@ http://whattheemacsd.com/setup-magit.el-01.html
   ad-do-it
   (jump-to-register :magit-fullscreen))
 #+end_src
-*** TODO Autoload magit-svn (should autoload magit-svn-mode too)
+*** Autoload magit-svn
 #+begin_src emacs-lisp
 (eval-after-load 'magit
   '(require 'magit-svn))
+(add-hook 'magit-mode-hook 'magit-svn-mode)
 #+end_src
 ** multiple-cursors
 Multiple cursors, for editing multiple lines.
