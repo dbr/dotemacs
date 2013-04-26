@@ -531,15 +531,29 @@ Hide empty groups
 #+end_src
 *** Configure groups
 #+begin_src emacs-lisp
-(setq ibuffer-saved-filter-groups
-      '(("emacs-config" (or (filename . ".emacs.d")
-                            (filename . "emacs-config")))
-        ("Org" (mode . org-mode))
-        ("Python" (mode . python-mode))
-        ("Jabber" (name . "jabber\*"))
-        ("Help" (or (name . "\*Help\*")
-                    (name . "\*Apropos\*")
-                    (name . "\*info\*")))))
+  (setq ibuffer-saved-filter-groups
+        (quote (("default"
+                 ("emacs" (or
+                           (name . "^\\*scratch\\*$")
+                           (name . "^\\*Messages\\*$")))
+                 ("org" (or
+                         (mode . org-mode)))
+                 ("magit" (or
+                           (name . "\\*magit:")))
+                 ("jabber" (or (mode . jabber-roster-mode)
+                               (mode . jabber-chat-mode)))
+                 ("Help" (or (mode . help-mode)
+                             (name . "\*Help\*")
+                             (name . "\*Apropos\*")
+                             (name . "\*info\*")))
+                 ("code"
+                  (filename . "~/code/")
+                  )))))
+
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default")))
+
 #+end_src
 *** Fix find-file key override
 ido'ify the overridden find-file shortcut, which starts ifo-find-file
