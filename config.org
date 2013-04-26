@@ -925,7 +925,18 @@ Shows status in top bar if not "online" (away/XA etc)
 (setq jabber-roster-show-bindings nil)
 (setq jabber-show-offline-contacts nil)
 #+end_src
-* Laptop keyboard specific stuff
+* Host specific changes
+#+begin_src emacs-lisp
+  (let ((local-conf-name (expand-file-name "current-host.el" dotfiles-dir))
+        (perhost-conf-name (expand-file-name (format "%s.el" (first (split-string system-name "\\."))) dotfiles-dir)))
+    (cond ((file-exists-p local-conf-name)
+           (load-file local-conf-name))
+          ((message "Local %s doesn't exist" local-conf-name)))
+    (cond ((file-exists-p perhost-conf-name)
+           (load-file perhost-conf-name))
+          ((message "Perhost config %s doesn't exist" perhost-conf-name))))
+  
+#+end_src
 * Notes
 ** rgb to hex function
 Might be useful for modifying theme at some point
