@@ -576,6 +576,16 @@ From http://www.emacswiki.org/emacs/InteractivelyDoThings
 (define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
 #+end_src
 
+*** Increase column width
+http://unix.stackexchange.com/questions/35830/change-column-width-in-an-emacs-ibuffer-on-the-fly
+#+begin_src emacs-lisp
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) " "
+              (size 9 -1 :right) " "
+              (mode 16 16 :left :elide) " " filename-and-process)
+        (mark " " (name 16 -1) " " filename)))
+#+end_src
 ** smex
 Weighted ido'ish M-x enhancement
 https://github.com/nonsequitur/smex
