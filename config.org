@@ -944,6 +944,7 @@ Shows status in top bar if not "online" (away/XA etc)
 ;(setq jabber-alert-message-hooks (quote (jabber-message-echo jabber-message-scroll)) t)
 ;(setq jabber-connection-ssl-program nil)
 
+(setq jabber-roster-show-title nil)
 (setq jabber-alert-presence-hooks nil)
 (setq jabber-backlog-number 30)
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
