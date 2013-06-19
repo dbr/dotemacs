@@ -995,8 +995,8 @@ https://gist.github.com/ivan4th/5205479
 #+end_src
 * Host specific changes
 #+begin_src emacs-lisp
-  (let ((local-conf-name (expand-file-name "current-host.el" dotfiles-dir))
-        (perhost-conf-name (expand-file-name (format "%s.el" (first (split-string system-name "\\."))) dotfiles-dir)))
+  (let ((local-conf-name (expand-file-name "current-host.el" (expand-file-name "perhost" dotfiles-dir)))
+        (perhost-conf-name (expand-file-name (expand-file-name (format "%s.el" (first (split-string system-name "\\."))) "perhost") dotfiles-dir)))
     (cond ((file-exists-p local-conf-name)
            (load-file local-conf-name))
           ((message "Local %s doesn't exist" local-conf-name)))
