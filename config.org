@@ -933,7 +933,12 @@ Shows status in top bar if not "online" (away/XA etc)
 
 #+end_src
 *** Order 'chatty' not-first
-(setq jabber-sort-order (quote ("" "away" "dnd" "xa")))
+#+begin_src emacs-lisp
+(setq jabber-sort-order (quote ("" "chat" "away" "dnd" "xa")))
+(setq jabber-roster-sort-functions '(
+  ;;jabber-roster-sort-by-status
+  jabber-roster-sort-by-displayname))
+#+end_src
 *** Logging settings
 #+begin_src emacs-lisp
 (setq jabber-history-enabled t)
