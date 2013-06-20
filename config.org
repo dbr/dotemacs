@@ -533,26 +533,38 @@ Hide empty groups
 #+begin_src emacs-lisp
   (setq ibuffer-saved-filter-groups
         (quote (("default"
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$")))
                  ("org" (or
-                         (mode . org-mode)))
+                         (mode . org-mode)
+                         ))
                  ("magit" (or
-                           (name . "\\*magit:")))
+                           (name . "\\*magit:")
+                           ))
                  ("jabber" (or (mode . jabber-roster-mode)
-                               (mode . jabber-chat-mode)))
+                               (mode . jabber-chat-mode)
+                               ))
                  ("Help" (or (mode . help-mode)
                              (name . "\*Help\*")
                              (name . "\*Apropos\*")
-                             (name . "\*info\*")))
+                             (name . "\*info\*")
+                             ))
+                 ("emacs" (or
+                           (mode . fundamental)
+                           (name . "\\*scratch\\*$")
+                           (name . "\\*Messages\\*$")
+                           (name . "\\*magit-process\\*$")
+                           (name . "\\*Compile-Log\\*$")
+                           (name . "\\*Backtrace\\*$")
+                           ))
                  ("code"
-                  (filename . "~/code/")
-                  )))))
+                  (filename . "~/code/.*") ;; FIXME: ~/ is not expanded
+                  )
+                 ))))
 
   (add-hook 'ibuffer-mode-hook
             (lambda ()
               (ibuffer-switch-to-saved-filter-groups "default")))
+
+
 
 #+end_src
 *** Fix find-file key override
