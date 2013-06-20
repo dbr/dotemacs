@@ -998,6 +998,31 @@ https://gist.github.com/ivan4th/5205479
 
 (global-set-key "\C-x\C-j\C-j" 'my-jabber-chat-with)
 #+end_src
+** Cursor indicates overwrite etc
+Change cursor color according to mode; inspired by
+http://www.emacswiki.org/emacs/ChangingCursorDynamically
+http://emacs-fu.blogspot.com.au/2009/12/changing-cursor-color-and-shape.html
+
+#+begin_src emacs-lisp
+;; valid values are t, nil, box, hollow, bar, (bar . WIDTH), hbar,
+;; (hbar. HEIGHT); see the docs for set-cursor-type
+(setq djcb-normal-cursor-type    'bar)
+(setq djcb-read-only-cursor-type 'hbar)
+(setq djcb-overwrite-cursor-type 'box)
+
+(defun djcb-set-cursor-according-to-mode ()
+  "change cursor color and type according to some minor modes."
+
+  (cond
+    (buffer-read-only
+      (setq cursor-type djcb-read-only-cursor-type))
+    (overwrite-mode
+      (setq cursor-type djcb-overwrite-cursor-type))
+    (t
+      (setq cursor-type djcb-normal-cursor-type))))
+
+(add-hook 'post-command-hook 'djcb-set-cursor-according-to-mode)
+#+end_src
 * Host specific changes
 #+begin_src emacs-lisp
   (let ((local-conf-name (expand-file-name "current-host.el" (expand-file-name "perhost" dotfiles-dir)))
