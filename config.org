@@ -173,9 +173,9 @@ identical in disabled windows.
 #+end_src
 ** Start server
 #+begin_src emacs-lisp
+(setq server-use-tcp t)
 (server-start)
 #+end_src
-
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
