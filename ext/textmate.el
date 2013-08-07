@@ -347,7 +347,7 @@ A place is considered `tab-width' character columns."
         (beg (or (and mark-active (region-beginning))
                  (line-beginning-position)))
         (end (or (and mark-active (region-end)) (line-end-position))))
-    (indent-rigidly beg end (* (or arg 1) tab-width))))
+    (indent-rigidly beg end (* (or arg 1) (or python-indent tab-width)))))
 
 (defun textmate-shift-left (&optional arg)
   "Shift the line or region to the ARG places to the left."
