@@ -114,7 +114,7 @@ completing filenames and symbols (`ido' by default)")
 	   (define-key map [(alt t)] 'textmate-goto-file)
            (define-key map [(alt shift l)] 'textmate-select-line)
 	   (define-key map [(alt shift t)] 'textmate-goto-symbol))
-	  ((featurep 'ns)  ;; Emacs.app
+	  ((or (featurep 'ns) (featurep 'gtk))  ;; Emacs.app
 	   (define-key map [(super meta return)] 'textmate-next-line)
 	   (define-key map [(super meta t)] 'textmate-clear-cache)
 	   (define-key map [(super meta \])] 'align)
