@@ -538,6 +538,7 @@ Hide empty groups
                          ))
                  ("magit" (or
                            (name . "\\*magit:")
+                           (mode . magit-mode)
                            ))
                  ("jabber" (or (mode . jabber-roster-mode)
                                (mode . jabber-chat-mode)
@@ -548,15 +549,18 @@ Hide empty groups
                              (name . "\*info\*")
                              ))
                  ("emacs" (or
-                           (mode . fundamental)
+                           ;(mode . fundamental)
                            (name . "\\*scratch\\*$")
                            (name . "\\*Messages\\*$")
                            (name . "\\*magit-process\\*$")
                            (name . "\\*Compile-Log\\*$")
                            (name . "\\*Backtrace\\*$")
+  
+                           ;; Magit internal stuff
+                           (name . "\\*magit-")
                            ))
                  ("code"
-                  (filename . "~/code/.*") ;; FIXME: ~/ is not expanded
+                  (filename . (expand-file-name "~/code/.*"))
                   )
                  ))))
 
