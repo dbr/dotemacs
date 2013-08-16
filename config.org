@@ -602,6 +602,9 @@ http://unix.stackexchange.com/questions/35830/change-column-width-in-an-emacs-ib
               (mode 16 16 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
 #+end_src
+*** TODO Group by vc-root
+ibuffer-vc
+https://github.com/purcell/ibuffer-vc
 ** smex
 Weighted ido'ish M-x enhancement
 https://github.com/nonsequitur/smex
