@@ -1043,16 +1043,48 @@ http://emacs-fu.blogspot.com.au/2009/12/changing-cursor-color-and-shape.html
 (add-hook 'post-command-hook 'djcb-set-cursor-according-to-mode)
 #+end_src
 * Host specific changes
+Relative to this file,
+
+- perhost/current-host.el - useful for customisations specific to
+  machines on a network with a shared home-dir. Not commited.
+- perhost/${HOST}.el - hostname-specific customisations. Could be
+  commited.
+- perhost/{linux,windows,darwin,etc}.el - OS specific config
+
 #+begin_src emacs-lisp
-  (let ((local-conf-name (expand-file-name "current-host.el" (expand-file-name "perhost" dotfiles-dir)))
-        (perhost-conf-name (expand-file-name (expand-file-name (format "%s.el" (first (split-string system-name "\\."))) "perhost") dotfiles-dir)))
+  (defun dotemacs-joindirs (root &rest dirs)
+    "Joins a series of directories together, like Python's os.path.join,
+    (dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") => /tmp/a/b/c"
+
+    (if (not dirs)
+        root ; No more dirs to join, no more recursing
+      (apply 'dotemacs-joindirs
+             (expand-file-name (car dirs) root)
+             (cdr dirs))))
+
+
+  (defun dotemacs-current-platform ()
+    (let ((cur-plat-name (symbol-name system-type)) ; Current platform
+          (platform-remap '( ; A map from akward-filesystem-names to simpler ones
+                            ("gnu/linux" . "linux")
+                            ("windows-nt" . "windows")
+                            ("darwin" . "darwin")
+                            )))
+      (cdr (assoc cur-plat-name platform-remap))))
+
+
+  (let ((local-conf-name    (dotemacs-joindirs dotfiles-dir "perhost" "current-host.el"))
+        (perhost-conf-name  (dotemacs-joindirs dotfiles-dir (format "%s.el" (first (split-string system-name "\\.")))))
+        (platform-conf-name (dotemacs-joindirs dotfiles-dir (format "%s.el" (dotemacs-current-platform))))
+        )
+
     (cond ((file-exists-p local-conf-name)
            (load-file local-conf-name))
           ((message "Local %s doesn't exist" local-conf-name)))
     (cond ((file-exists-p perhost-conf-name)
            (load-file perhost-conf-name))
-          ((message "Perhost config %s doesn't exist" perhost-conf-name))))
-  
+          ((message "Platform-specific config %s doesn't exist" platform-conf-name))))
+
 #+end_src
 * Notes
 ** rgb to hex function
