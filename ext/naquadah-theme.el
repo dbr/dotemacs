@@ -187,6 +187,9 @@
    '(jabber-chat-prompt-foreign ((t (:foreground "#c6a542"))))
    '(jabber-rare-time-face ((t (:foreground "#3e823a"))))
    '(jabber-roster-user-chatty ((t (:foreground "#3b6c4a"))))
+
+   '(flymake-errline ((t (:foreground "black" :background "#ff3333"))))
+
    '(jabber-title-large ((t (:height 130)))) ;; The value is in 1/10pt, so 100 will give you 10pt, etc.
    '(jabber-title-medium ((t (:height 110))))
 ))
