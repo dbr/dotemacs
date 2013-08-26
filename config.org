@@ -1055,6 +1055,25 @@ http://stackoverflow.com/a/16986889/745
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 #+end_src
+** Ack
+"M-x ack" like "M-x grep"
+
+From http://www.emacswiki.org/emacs/Ack
+
+#+begin_src emacs-lisp
+(defvar ack-history nil
+  "History for the `ack' command.")
+
+(defun ack (command-args)
+  (interactive
+   (let ((ack-command "ack --nogroup --with-filename "))
+     (list (read-shell-command "Run ack (like this): "
+                               ack-command
+                               'ack-history))))
+  (let ((compilation-disable-input t))
+    (compilation-start (concat command-args " < " null-device)
+                       'grep-mode)))
+#+end_src
 * Host specific changes
 Relative to this file,
 
