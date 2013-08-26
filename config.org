@@ -1045,6 +1045,16 @@ http://emacs-fu.blogspot.com.au/2009/12/changing-cursor-color-and-shape.html
 
 (add-hook 'post-command-hook 'djcb-set-cursor-according-to-mode)
 #+end_src
+** recursive minibuffer
+Ability to call other minibuf-using functions while the minibuf is active
+
+http://www.gnu.org/software/emacs/manual/html_node/elisp/Recursive-Mini.html
+http://stackoverflow.com/a/16986889/745
+
+#+begin_src emacs-lisp
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+#+end_src
 * Host specific changes
 Relative to this file,
 
