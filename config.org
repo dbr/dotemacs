@@ -859,18 +859,21 @@ C-i i to load magit-status
 #+begin_src emacs-lisp
 (global-set-key "\C-ci" 'magit-status)
 #+end_src
-*** Fullscreen status
+*** Fullscreen status (disabled)
 http://whattheemacsd.com/setup-magit.el-01.html
 
-#+begin_src emacs-lisp
-(defadvice magit-status (around magit-fullscreen activate)
-  (window-configuration-to-register :magit-fullscreen)
-  ad-do-it
-  (delete-other-windows))
+Disabled as restoring the magit-quit-window doens't cover all cases of
+exiting magit (e.g hitting return on a diff chunk)
 
-(defadvice magit-quit-window (around magit-restore-screen activate)
-  ad-do-it
-  (jump-to-register :magit-fullscreen))
+##+begin_src emacs-lisp
+;(defadvice magit-status (around magit-fullscreen activate)
+;  (window-configuration-to-register :magit-fullscreen)
+;  ad-do-it
+;  (delete-other-windows))
+;
+;(defadvice magit-quit-window (around magit-restore-screen activate)
+;  ad-do-it
+;  (jump-to-register :magit-fullscreen))
 #+end_src
 *** Autoload magit-svn
 #+begin_src emacs-lisp
