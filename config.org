@@ -559,17 +559,11 @@ Hide empty groups
                            ;; Magit internal stuff
                            (name . "\\*magit-")
                            ))
-                 ("code"
-                  (filename . (expand-file-name "~/code/.*"))
-                  )
                  ))))
 
   (add-hook 'ibuffer-mode-hook
             (lambda ()
               (ibuffer-switch-to-saved-filter-groups "default")))
-
-
-
 #+end_src
 *** Fix find-file key override
 ido'ify the overridden find-file shortcut, which starts ifo-find-file
