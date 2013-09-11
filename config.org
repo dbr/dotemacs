@@ -535,6 +535,7 @@ Hide empty groups
         (quote (("default"
                  ("org" (or
                          (mode . org-mode)
+                         (name . "\\*Org ")
                          ))
                  ("magit" (or
                            (name . "\\*magit:")
