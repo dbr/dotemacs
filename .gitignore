@@ -7,3 +7,4 @@ url/cache
 config.el
 url/cookies
 *.pyc
+server/server
