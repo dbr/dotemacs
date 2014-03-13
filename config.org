@@ -1015,6 +1015,40 @@ https://gist.github.com/ivan4th/5205479
 
 (global-set-key "\C-x\C-j\C-j" 'my-jabber-chat-with)
 #+end_src
+*** X window urgency on notification
+Unread messages cause window to flash, making alerts visible say on other virtual-desktops
+
+From http://www.emacswiki.org/emacs/JabberEl
+
+#+begin_src emacs-lisp
+(if (string-equal (symbol-name system-type) "gnu/linux")
+  (progn
+
+    (defun x-urgency-hint (frame arg &optional source)
+      (let* ((wm-hints (append (x-window-property
+                    "WM_HINTS" frame "WM_HINTS" source nil t) nil))
+         (flags (car wm-hints)))
+        (setcar wm-hints
+            (if arg
+            (logior flags #x00000100)
+              (logand flags #x1ffffeff)))
+        (x-change-window-property "WM_HINTS" wm-hints frame "WM_HINTS" 32 t)))
+
+
+    (defvar jabber-activity-jids-count 0)
+
+    (defun jabber-urgency-hint ()
+      (let ((count (length jabber-activity-jids)))
+        (unless (= jabber-activity-jids-count count)
+          (if (zerop count)
+          (x-urgency-hint (selected-frame) nil)
+        (x-urgency-hint (selected-frame) t))
+          (setq jabber-activity-jids-count count))))
+
+    (add-hook 'jabber-activity-update-hook 'jabber-urgency-hint)
+
+))
+#+end_src
 ** Cursor indicates overwrite etc
 Change cursor color according to mode; inspired by
 http://www.emacswiki.org/emacs/ChangingCursorDynamically
