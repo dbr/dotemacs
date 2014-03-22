@@ -1103,6 +1103,16 @@ From http://www.emacswiki.org/emacs/Ack
     (compilation-start (concat command-args " < " null-device)
                        'grep-mode)))
 #+end_src
+** Disable interlocking
+Disable .#blah.txt lock files
+
+They are symlinks to fictious files (user@host.pid) which cause
+problems with various things, and the locking is of very little
+benefit to me
+
+#+begin_src emacs-lisp
+(setq create-lockfiles nil)
+#+end_src
 * Host specific changes
 Relative to this file,
 
