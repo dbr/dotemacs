@@ -1113,6 +1113,12 @@ benefit to me
 #+begin_src emacs-lisp
 (setq create-lockfiles nil)
 #+end_src
+** lua-mode
+#+begin_src emacs-lisp
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+#+end_src
 * Host specific changes
 Relative to this file,
 
