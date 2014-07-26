@@ -1119,6 +1119,11 @@ benefit to me
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 #+end_src
+** god-mode
+#+begin_src emacs-lisp
+(require 'god-mode)
+(global-set-key (kbd "<escape>") 'god-local-mode)
+#+end_src
 * Host specific changes
 Relative to this file,
 
