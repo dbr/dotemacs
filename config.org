@@ -1122,7 +1122,7 @@ benefit to me
 ** god-mode
 #+begin_src emacs-lisp
 (require 'god-mode)
-(global-set-key (kbd "<escape>") 'god-local-mode)
+(global-set-key (kbd "<escape>") 'god-mode-all)
 #+end_src
 * Host specific changes
 Relative to this file,
