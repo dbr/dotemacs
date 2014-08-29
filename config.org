@@ -173,7 +173,7 @@ identical in disabled windows.
 #+end_src
 ** Start server
 #+begin_src emacs-lisp
-(setq server-use-tcp t)
+(setq server-use-tcp nil)
 (server-start)
 #+end_src
 * FS navigation
