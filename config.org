@@ -176,6 +176,13 @@ identical in disabled windows.
 (setq server-use-tcp nil)
 (server-start)
 #+end_src
+** Prevent accidental quitting
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-c")
+            (lambda ()
+                  (interactive)
+                  (message "Disabled. Use 'M-x kill-emacs'")))
+#+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
