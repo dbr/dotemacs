@@ -1131,6 +1131,13 @@ benefit to me
 (require 'god-mode)
 (global-set-key (kbd "<escape>") 'god-mode-all)
 #+end_src
+** rust-mode
+https://github.com/rust-lang/rust/tree/master/src/etc/emacs
+
+#+begin_src emacs-lisp
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+#+end_src
 * Host specific changes
 Relative to this file,
 
