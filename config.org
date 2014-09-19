@@ -42,7 +42,9 @@ if(blah)
 ** Quieter visual bell
 Message in minibuf on bell, instead of system beep etc
 #+begin_src emacs-lisp
-(setq ring-bell-function (lambda () (message "*beep*")))
+(setq ring-bell-function (lambda ()
+                           (if (not (active-minibuffer-window))
+                               (message "*beep*"))))
 #+end_src
 *** Flash scroll-lock LED (disabled)
 #+begin_src emacs-lisp
@@ -73,7 +75,7 @@ Remove backups older than one week
       (current (float-time (current-time))))
   (dolist (file (directory-files temporary-file-directory t))
     (when (and (backup-file-name-p file)
-               (> (- current (float-time (fifth (file-attributes file))))
+               (> (- current (float-time (nth 5 (file-attributes file))))
                   week))
       (message file)
       (delete-file file))))
@@ -790,20 +792,36 @@ http://www.emacswiki.org/emacs/FastNav
 
 #+begin_src emacs-lisp
 (require 'fastnav)
-(global-set-key "\M-z" 'zap-up-to-char-forward)
-(global-set-key "\M-Z" 'zap-up-to-char-backward)
+
+; Useful
 (global-set-key "\M-s" 'jump-to-char-forward)
 (global-set-key "\M-S" 'jump-to-char-backward)
-(global-set-key "\M-r" 'replace-char-forward)
+(global-set-key "\M-k" 'delete-char-forward)
+(global-set-key "\M-K" 'delete-char-backward)
+
+; Questionable
+(global-set-key "\M-z" 'zap-up-to-char-forward)
+(global-set-key "\M-Z" 'zap-up-to-char-backward)
 (global-set-key "\M-R" 'replace-char-backward)
 (global-set-key "\M-i" 'insert-at-char-forward)
 (global-set-key "\M-I" 'insert-at-char-backward)
-(global-set-key "\M-k" 'delete-char-forward)
-(global-set-key "\M-K" 'delete-char-backward)
 (global-set-key "\M-m" 'mark-to-char-forward)
 (global-set-key "\M-M" 'mark-to-char-backward)
 (global-set-key "\M-p" 'sprint-forward)
 (global-set-key "\M-P" 'sprint-backward)
+
+; Conflicting
+;(global-set-key "\M-r" 'replace-char-forward)
+#+end_src
+** Show trailing whitespace
+F5 toggles showing trailing whitespace
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "<f5>")
+                (lambda ()
+                  (interactive)
+                  (setq show-trailing-whitespace (not show-trailing-whitespace))
+                  (redraw-display)))
 #+end_src
 ** git-blame
 #+begin_src emacs-lisp
