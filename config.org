@@ -1152,6 +1152,18 @@ https://github.com/rust-lang/rust/tree/master/src/etc/emacs
 (autoload 'rust-mode "rust-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 #+end_src
+** swift-mode
+https://github.com/chrisbarrett/swift-mode
+
+#+begin_src emacs-lisp
+(autoload 'swift-mode "swift-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.swift\\'" . swift-mode))
+#+end_src
+** esup
+#+begin_src emacs-lisp
+(autoload 'esup "esup" "Emacs Start Up Profiler." nil)
+(require 'esup)
+#+end_src
 * Host specific changes
 Relative to this file,
 
