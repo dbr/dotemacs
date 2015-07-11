@@ -619,7 +619,7 @@ Key bindings:
 
 Original M-x bound to C-c C-c M-x:
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(global-set-key (kbd "C-c M-x") 'execute-extended-command)
 #+end_src
 
 ** rib-mode
