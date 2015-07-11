@@ -1160,9 +1160,9 @@ https://github.com/chrisbarrett/swift-mode
 (add-to-list 'auto-mode-alist '("\\.swift\\'" . swift-mode))
 #+end_src
 ** esup
+https://github.com/jschaf/esup
 #+begin_src emacs-lisp
 (autoload 'esup "esup" "Emacs Start Up Profiler." nil)
-(require 'esup)
 #+end_src
 * Host specific changes
 Relative to this file,
