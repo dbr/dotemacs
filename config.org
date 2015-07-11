@@ -264,7 +264,6 @@ Store singular .el files in root of ext/ directory
          "multi-term"
          "restclient"
          "magit"
-         "multiple-cursors"
          "emacs-jabber"
          ))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
@@ -893,18 +892,6 @@ exiting magit (e.g hitting return on a diff chunk)
 (eval-after-load 'magit
   '(require 'magit-svn))
 (add-hook 'magit-mode-hook 'magit-svn-mode)
-#+end_src
-** multiple-cursors
-Multiple cursors, for editing multiple lines.
-
-https://github.com/magnars/multiple-cursors.el
-http://emacsrocks.com/e13.html
-#+begin_src emacs-lisp
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 #+end_src
 ** Same-frame speedbar
 #+begin_src emacs-lisp
