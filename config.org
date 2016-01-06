@@ -293,18 +293,21 @@ https://github.com/purcell/exec-path-from-shell
 #+end_src
 * Misc modules
 ** Theme
-*** Gunmetal (disabled)
-Heavily tweaked gunmetal theme
-
-#+begin_src emacs-lisp
-;(require 'color-theme)
-;(require 'gunmetal)
-;(color-theme-gunmetal)
-#+end_src
-*** Naquadah
+*** Naquadah (disabled)
 http://julien.danjou.info/blog/2011.html#Naquadah_theme_for_Emacs
 #+begin_src emacs-lisp
-(require 'naquadah-theme)
+;(require 'naquadah-theme)
+#+end_src
+*** ample
+https://github.com/jordonbiondo/ample-theme
+#+begin_src emacs-lisp
+(load-theme 'ample t t)
+(enable-theme 'ample)
+
+; Tweak background
+(custom-theme-set-faces
+  `ample
+  `(default ((t (:background "gray20")))))
 #+end_src
 ** Undo window changes
 Undo changes to layout with C-left C-right
@@ -861,7 +864,7 @@ http://jblevins.org/projects/markdown-mode/
 #+end_src
 ** magit
 git interface
-http://philjackson.github.com/magit/magit.html
+http://magit.vc/
 *** Load module
 #+begin_src emacs-lisp
 (autoload 'magit-status "magit" nil t)
@@ -874,18 +877,18 @@ C-i i to load magit-status
 *** Fullscreen status (disabled)
 http://whattheemacsd.com/setup-magit.el-01.html
 
-Disabled as restoring the magit-quit-window doens't cover all cases of
-exiting magit (e.g hitting return on a diff chunk)
+Note that magit-quit-window doens't cover all cases of exiting magit
+(e.g hitting return on a diff chunk will not restore layout)
 
 ##+begin_src emacs-lisp
-;(defadvice magit-status (around magit-fullscreen activate)
-;  (window-configuration-to-register :magit-fullscreen)
-;  ad-do-it
-;  (delete-other-windows))
-;
-;(defadvice magit-quit-window (around magit-restore-screen activate)
-;  ad-do-it
-;  (jump-to-register :magit-fullscreen))
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defadvice magit-quit-window (around magit-restore-screen activate)
+  ad-do-it
+  (jump-to-register :magit-fullscreen))
 #+end_src
 *** Autoload magit-svn
 #+begin_src emacs-lisp
