@@ -1123,6 +1123,11 @@ https://github.com/rust-lang/rust/tree/master/src/etc/emacs
 (autoload 'rust-mode "rust-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 #+end_src
+*** Cargo mode
+#+begin_src emacs-lisp
+(require 'cargo)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+#+end_src
 ** swift-mode
 https://github.com/chrisbarrett/swift-mode
 
