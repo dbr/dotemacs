@@ -885,14 +885,6 @@ https://github.com/magit/magit/issues/1953
   '(require 'magit-svn))
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 #+end_src
-** Same-frame speedbar
-#+begin_src emacs-lisp
-(autoload 'sr-speedbar-toggle "sr-speedbar" nil t)
-#+end_src
-*** keybinding (disabled)
-#+begin_src emacs-lisp
-; (global-set-key [(super s)] 'sr-speedbar-toggle)
-#+end_src
 ** mu4e (disabled)
 Email client
 http://www.djcbsoftware.nl/code/mu/mu4e.html
