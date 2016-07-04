@@ -1039,7 +1039,7 @@ From http://www.emacswiki.org/emacs/JabberEl
           (x-change-window-property "WM_HINTS" wm-hints frame "WM_HINTS" 32 t)))
       (defun x-urgency-hint-all (value)
         (dolist (frame  (frame-list))
-          (ignore-errors ; Ignore error about non-X frames. Could be handled better in x-urgency-hint
+          (ignore-errors
             (x-urgency-hint frame value))))
       
       (defvar jabber-activity-jids-count 0)
@@ -1055,6 +1055,12 @@ From http://www.emacswiki.org/emacs/JabberEl
       (add-hook 'jabber-activity-update-hook 'jabber-urgency-hint)
   
   ))
+  
+  (defun x-jabber-clear-urgency ()
+    (interactive)
+    (x-urgency-hint-all nil)
+  )
+  
 #+end_src
 ** Cursor indicates overwrite etc
 Change cursor color according to mode; inspired by
