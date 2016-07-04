@@ -244,6 +244,18 @@ http://blog.gabrielsaldana.org/quick-note-taking-with-emacs-and-org-capture/
         ("l" "Link" plain (file (concat org-directory "/links.org"))
          "- %?\n %x\n")))
 #+end_src
+** todo keywords
+#+begin_src emacs-lisp
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)")))
+  
+  (setq org-todo-keyword-faces
+        '(
+          ("TODO" . (:weight bold :foreground "#ff2020" :background "grey10"))
+          ("WAIT" . (:weight bold :foreground "grey70" :background "grey10"))
+          ("DONE" . (:weight bold :foreground "grey50"))
+           ))
+#+end_src
 * Load path
 *** Get base directory
 #+begin_src emacs-lisp
