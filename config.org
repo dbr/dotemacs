@@ -681,10 +681,13 @@ http://www.emacswiki.org/emacs/TempbufMode
 #+end_src
 ** yaml-mode
 https://github.com/yoshiki/yaml-mode
+
+Auto-mode for .yml and .yaml, also .ocio (OpenColorIO config files)
 #+begin_src emacs-lisp
 (autoload 'yaml-mode "yaml-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.ocio$" . yaml-mode))
 #+end_src
 ** clear shell
 Clear inferior-python shell etc
