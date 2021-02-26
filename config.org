@@ -842,9 +842,6 @@ https://github.com/magit/magit/issues/1953
   '(require 'magit-svn))
 (add-hook 'magit-mode-hook 'magit-svn-mode)
 #+end_src
-** mu4e (disabled)
-Email client
-http://www.djcbsoftware.nl/code/mu/mu4e.html
 ** stripe-buffer
 Alternating line-colours in dired
 https://github.com/sabof/stripe-buffer
