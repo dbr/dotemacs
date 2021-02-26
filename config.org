@@ -308,11 +308,6 @@ https://github.com/purcell/exec-path-from-shell
 #+end_src
 * Misc modules
 ** Theme
-*** Naquadah (disabled)
-http://julien.danjou.info/blog/2011.html#Naquadah_theme_for_Emacs
-#+begin_src emacs-lisp
-;(require 'naquadah-theme)
-#+end_src
 *** ample
 https://github.com/jordonbiondo/ample-theme
 #+begin_src emacs-lisp
@@ -824,24 +819,6 @@ http://jblevins.org/projects/markdown-mode/
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 #+end_src
-** coffee-script mode
-*** Auto-mode for .coffee
-#+begin_src emacs-lisp
-(require 'coffee-mode)
-#+end_src
-#+begin_src emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-#+end_src
-*** Convention'y tab-width
-#+begin_src emacs-lisp
-(defun coffee-custom ()
-  "coffee-mode-hook"
- (set (make-local-variable 'tab-width) 2))
-
-(add-hook 'coffee-mode-hook
-  '(lambda() (coffee-custom)))
-#+end_src
 ** magit
 git interface
 http://magit.vc/
@@ -1113,13 +1090,6 @@ https://github.com/rust-lang/rust/tree/master/src/etc/emacs
 #+begin_src emacs-lisp
 (require 'cargo)
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
-#+end_src
-** swift-mode
-https://github.com/chrisbarrett/swift-mode
-
-#+begin_src emacs-lisp
-(autoload 'swift-mode "swift-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.swift\\'" . swift-mode))
 #+end_src
 ** Show trailing whitespace
 F5 toggles showing trailing whitespace
