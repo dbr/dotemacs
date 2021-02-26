@@ -276,7 +276,6 @@ Store singular .el files in root of ext/ directory
 (dolist
     (d '(
          "google-maps"
-         "yasnippet"
          "multi-term"
          "restclient"
          "magit"
@@ -413,44 +412,6 @@ Useful for editing themes and CSS
 http://julien.danjou.info/rainbow-mode.html
 #+begin_src emacs-lisp
 (require 'rainbow-mode)
-#+end_src
-** yasnippet
-*** Load code
-#+begin_src emacs-lisp
-(require 'yasnippet)
-(yas/global-mode 1)
-#+end_src
-*** Custom snippet dir
-#+begin_src emacs-lisp
-(yas/load-directory (expand-file-name "snippets" dotfiles-dir))
-#+end_src
-*** Change completion UI
-Use text-based yas-dropdown-prompt, as it shows all the snippets most
-clearly, and allows selecition via numbers.
-
-The default dialog in Cocoa is similar, but selection only works with
-arrows/return. The yas-ido-prompt doesn't work well because all the
-snippets are similarly named
-
-#+begin_src emacs-lisp
-(require 'dropdown-list)
-(setq yas-prompt-functions '(yas-dropdown-prompt))
-#+end_src
-*** Make it work in org-mode
-org-mode's tab overriding prevents yasnippet from working
-
-http://orgmode.org/worg/org-faq.html#YASnippet
-#+begin_src emacs-lisp
-(defun yas/org-very-safe-expand ()
-  (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            ;; yasnippet (using the new org-cycle hooks)
-            (make-variable-buffer-local 'yas/trigger-key)
-            (setq yas/trigger-key [tab])
-            (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-            (define-key yas/keymap [tab] 'yas/next-field)))
 #+end_src
 ** Flymake
 *** Prevent popups on OS X
