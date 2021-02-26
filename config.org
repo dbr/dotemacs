@@ -1121,11 +1121,6 @@ https://github.com/chrisbarrett/swift-mode
 (autoload 'swift-mode "swift-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.swift\\'" . swift-mode))
 #+end_src
-** esup
-https://github.com/jschaf/esup
-#+begin_src emacs-lisp
-(autoload 'esup "esup" "Emacs Start Up Profiler." nil)
-#+end_src
 ** Show trailing whitespace
 F5 toggles showing trailing whitespace
 
