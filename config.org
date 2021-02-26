@@ -590,12 +590,6 @@ Original M-x bound to C-c C-c M-x:
 (global-set-key (kbd "C-c M-x") 'execute-extended-command)
 #+end_src
 
-** rib-mode
-For editing renderman'ish RIB files
-#+begin_src emacs-lisp
-(require 'rib-mode)
-(add-to-list 'auto-mode-alist '("\\.rib$" . rib-mode))
-#+end_src
 ** escreen
 http://blog.nguyenvq.com/2011/03/07/escreen-instead-of-elscreen-for-screen-like-features-in-emacs/
 *** Load
