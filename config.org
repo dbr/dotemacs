@@ -178,6 +178,10 @@ identical in disabled windows.
 (setq server-use-tcp nil)
 (server-start)
 #+end_src
+** Disable auto-indent
+#+begin_src emacs-lisp
+(electric-indent-mode 0)
+#+end_src
 * FS navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
