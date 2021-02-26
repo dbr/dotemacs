@@ -395,13 +395,6 @@ Joins next line onto current one, like vim's 'shift+j'
 #+begin_src emacs-lisp
 (require 'undo-tree)
 #+end_src
-** Google maps
-Erm.
-http://julien.danjou.info/google-maps-el.html
-#+begin_src emacs-lisp
-;(autoload 'google-maps)
-(autoload 'google-maps "google-maps")
-#+end_src
 ** Rainbow
 Useful for editing themes and CSS
 http://julien.danjou.info/rainbow-mode.html
