@@ -275,9 +275,6 @@ Store singular .el files in root of ext/ directory
 #+begin_src emacs-lisp
 (dolist
     (d '(
-         "google-maps"
-         "multi-term"
-         "restclient"
          "magit"
          "emacs-jabber"
          ))
@@ -653,16 +650,6 @@ M-# for vim-ish search word under cursor
 ; (global-set-key [M-up] 'move-text-up)
 ; (global-set-key [M-down] 'move-text-down)
 #+end_src
-** multi-term
-#+begin_src emacs-lisp
-(autoload 'multi-term "multi-term" nil t)
-(autoload 'multi-term-next "multi-term" nil t)
-
-(setq multi-term-program "/bin/bash")
-
-(global-set-key (kbd "C-c t") 'multi-term-next)
-(global-set-key (kbd "C-c T") 'multi-term) ;; create a new one
-#+end_src
 ** fastnav
 http://www.emacswiki.org/emacs/FastNav
 
@@ -706,11 +693,6 @@ F5 toggles showing trailing whitespace
 *** Show hash and start of commit message
 #+begin_src emacs-lisp
 (setq git-blame-prefix-format "%h %.10s:")
-#+end_src
-** restclient
-https://github.com/pashky/restclient.el
-#+begin_src emacs-lisp
-(require 'restclient)
 #+end_src
 ** markdown-mode
 http://jblevins.org/projects/markdown-mode/
