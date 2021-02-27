@@ -185,7 +185,8 @@ identical in disabled windows.
 #+begin_src emacs-lisp
 (electric-indent-mode 0)
 #+end_src
-* melpa
+* Packaging setup
+melpa repo and workaround for TLS weirdness
 #+begin_src emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -195,7 +196,7 @@ identical in disabled windows.
 ; Weirdness required for Debian? also required 'apt install gnutls-bin'
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+end_src
-* FS navigation
+* Filesystem navigation
 ** Use ido for shinier minibuf (C-x b and C-x C-f)
 #+begin_src emacs-lisp
 (ido-mode 1)
