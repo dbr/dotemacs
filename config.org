@@ -7,7 +7,6 @@
 (scroll-bar-mode 0)
 (display-battery-mode 0)
 #+end_src
-
 ** Shorter prompt
 #+begin_src emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -46,12 +45,7 @@ Message in minibuf on bell, instead of system beep etc
                            (if (not (active-minibuffer-window))
                                (message "*beep*"))))
 #+end_src
-*** Flash scroll-lock LED (disabled)
-#+begin_src emacs-lisp
-;(setq ring-bell-function (lambda ()
-;  (call-process-shell-command "xset led 3; xset -led 3" nil 0 nil)))
-#+end_src
-** Avoid FS mess
+** Avoid filesystem mess
 *** Move autosave/backup files to ~/.emacs.d/autosaves and ~/.emacs.d/backups
 
 #+begin_src emacs-lisp
@@ -81,11 +75,20 @@ Remove backups older than one week
       (delete-file file))))
 #+end_src
 
+*** Disable interlocking
+Disable .#blah.txt lock files
+
+They are symlinks to fictious files (user@host.pid) which cause
+problems with various things, and the locking is of very little
+benefit to me
+
+#+begin_src emacs-lisp
+(setq create-lockfiles nil)
+#+end_src
 ** Empty default scratch buffer
 #+begin_src emacs-lisp
 (setq initial-scratch-message "")
 #+end_src
-
 ** Recent files
 *** Enable recentf mode
 Also limit to 25 files
@@ -762,16 +765,6 @@ http://stackoverflow.com/a/16986889/745
 #+begin_src emacs-lisp
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
-#+end_src
-** Disable interlocking
-Disable .#blah.txt lock files
-
-They are symlinks to fictious files (user@host.pid) which cause
-problems with various things, and the locking is of very little
-benefit to me
-
-#+begin_src emacs-lisp
-(setq create-lockfiles nil)
 #+end_src
 ** god-mode
 #+begin_src emacs-lisp
