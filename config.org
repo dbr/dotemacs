@@ -663,32 +663,6 @@ M-# for vim-ish search word under cursor
 ; (global-set-key [M-up] 'move-text-up)
 ; (global-set-key [M-down] 'move-text-down)
 #+end_src
-** fastnav
-http://www.emacswiki.org/emacs/FastNav
-
-#+begin_src emacs-lisp
-(require 'fastnav)
-
-; Useful
-(global-set-key "\M-s" 'jump-to-char-forward)
-(global-set-key "\M-S" 'jump-to-char-backward)
-(global-set-key "\M-k" 'delete-char-forward)
-(global-set-key "\M-K" 'delete-char-backward)
-
-; Questionable
-(global-set-key "\M-z" 'zap-up-to-char-forward)
-(global-set-key "\M-Z" 'zap-up-to-char-backward)
-(global-set-key "\M-R" 'replace-char-backward)
-(global-set-key "\M-i" 'insert-at-char-forward)
-(global-set-key "\M-I" 'insert-at-char-backward)
-(global-set-key "\M-m" 'mark-to-char-forward)
-(global-set-key "\M-M" 'mark-to-char-backward)
-(global-set-key "\M-p" 'sprint-forward)
-(global-set-key "\M-P" 'sprint-backward)
-
-; Conflicting
-;(global-set-key "\M-r" 'replace-char-forward)
-#+end_src
 ** Show trailing whitespace
 F5 toggles showing trailing whitespace
 
