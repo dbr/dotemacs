@@ -8,3 +8,8 @@ config.el
 url/cookies
 *.pyc
 server/server
+
+# elpa stuff
+/elpa/archives/
+/elpa/gnupg/
+*.elc

@@ -781,9 +781,12 @@ http://stackoverflow.com/a/16986889/745
 (require 'god-mode)
 (global-set-key (kbd "<escape>") 'god-mode-all)
 #+end_src
-** TODO rust-mode
+** rust-mode
 Restore this
 https://github.com/rust-lang/rust-mode
+#+begin_src emacs-lisp
+(require 'rust-mode)
+#+end_src
 ** Show trailing whitespace
 F5 toggles showing trailing whitespace
 
