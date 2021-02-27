@@ -35,3 +35,23 @@
 
 ;; Load up the main file
 (org-babel-load-file (dotemacs-joindirs dotfiles-dir "config.org"))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#454545" "#cd5542" "#6aaf50" "#baba36" "#5180b3" "#ab75c3" "#bdbc61" "#bdbdb3"])
+ '(custom-safe-themes
+   (quote
+    ("3924f4d0cb873915a09cea3bdba3d378bb5fc575564b4c30093e18286ec4f395" "4f5bb895d88b6fe6a983e63429f154b8d939b4a8c581956493783b2515e22d6d" default)))
+ '(package-selected-packages
+   (quote
+    (stripe-buffer cmake-mode yaml-mode rust-mode magit))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
