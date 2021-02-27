@@ -275,7 +275,6 @@ Store singular .el files in root of ext/ directory
 #+begin_src emacs-lisp
 (dolist
     (d '(
-         "magit"
          "emacs-jabber"
          ))
   (add-to-list 'load-path (expand-file-name d (expand-file-name "ext" dotfiles-dir))))
@@ -706,29 +705,6 @@ http://jblevins.org/projects/markdown-mode/
 #+begin_src emacs-lisp
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-#+end_src
-** magit
-git interface
-http://magit.vc/
-*** Load module
-#+begin_src emacs-lisp
-(autoload 'magit-status "magit" nil t)
-#+end_src
-*** Custom key-bindings
-C-i i to load magit-status
-#+begin_src emacs-lisp
-(global-set-key "\C-ci" 'magit-status)
-#+end_src
-*** Fullscreen status
-https://github.com/magit/magit/issues/1953
-#+begin_src emacs-lisp
-(add-hook 'magit-status-mode-hook 'delete-other-windows)
-#+end_src
-*** Autoload magit-svn
-#+begin_src emacs-lisp
-(eval-after-load 'magit
-  '(require 'magit-svn))
-(add-hook 'magit-mode-hook 'magit-svn-mode)
 #+end_src
 ** stripe-buffer
 Alternating line-colours in dired
