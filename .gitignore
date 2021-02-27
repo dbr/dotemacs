@@ -13,3 +13,4 @@ server/server
 /elpa/archives/
 /elpa/gnupg/
 *.elc
+/transient
