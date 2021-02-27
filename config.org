@@ -787,25 +787,6 @@ http://stackoverflow.com/a/16986889/745
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 #+end_src
-** Ack
-"M-x ack" like "M-x grep"
-
-From http://www.emacswiki.org/emacs/Ack
-
-#+begin_src emacs-lisp
-(defvar ack-history nil
-  "History for the `ack' command.")
-
-(defun ack (command-args)
-  (interactive
-   (let ((ack-command "ack --nogroup --with-filename "))
-     (list (read-shell-command "Run ack (like this): "
-                               ack-command
-                               'ack-history))))
-  (let ((compilation-disable-input t))
-    (compilation-start (concat command-args " < " null-device)
-                       'grep-mode)))
-#+end_src
 ** Disable interlocking
 Disable .#blah.txt lock files
 
@@ -815,12 +796,6 @@ benefit to me
 
 #+begin_src emacs-lisp
 (setq create-lockfiles nil)
-#+end_src
-** lua-mode
-#+begin_src emacs-lisp
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 #+end_src
 ** god-mode
 #+begin_src emacs-lisp
