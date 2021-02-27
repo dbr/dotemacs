@@ -334,6 +334,11 @@ Undo changes to layout with C-left C-right
 #+begin_src emacs-lisp
 (winner-mode 1)
 #+end_src
+** magit
+git interface
+#+begin_src emacs-lisp
+(require 'magit)
+#+end_src
 ** highlight-parentheses
 Require module and set nicer colours
 
