@@ -339,6 +339,11 @@ git interface
 #+begin_src emacs-lisp
 (require 'magit)
 #+end_src
+
+Custom key bind in additon to C-x g
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c i") 'magit-status)
+#+end_src
 ** highlight-parentheses
 Require module and set nicer colours
 
