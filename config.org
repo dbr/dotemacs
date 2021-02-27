@@ -411,10 +411,6 @@ Joins next line onto current one, like vim's 'shift+j'
                   (interactive)
                   (join-line -1)))
 #+end_src
-** Undo-tree
-#+begin_src emacs-lisp
-(require 'undo-tree)
-#+end_src
 ** Rainbow
 Useful for editing themes and CSS
 http://julien.danjou.info/rainbow-mode.html
