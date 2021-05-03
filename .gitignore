@@ -14,3 +14,7 @@ server/server
 /elpa/gnupg/
 *.elc
 /transient
+
+# lsp-mode things
+.lsp-session-v*
+/.cache/lsp
