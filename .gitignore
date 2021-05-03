@@ -18,3 +18,4 @@ server/server
 # lsp-mode things
 .lsp-session-v*
 /.cache/lsp
+/ido.last
