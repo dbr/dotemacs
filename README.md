@@ -1,3 +1,7 @@
+## Emacs version
+
+This is used with emacs 27
+
 ## To use
 
 - `git clone` the repo to ~/.emacs.d

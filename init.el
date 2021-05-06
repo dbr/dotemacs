@@ -1,9 +1,6 @@
 ;; Loads the config.org babel file, originally based on
 ;; http://orgmode.org/worg/org-contrib/babel/intro.html
 
-; Unrelated: setup emacs builtin packaging early
-(package-initialize)
-
 ;; Helper function
 (defun dotemacs-joindirs (root &rest dirs)
   "Joins a series of directories together, like Python's os.path.join,
