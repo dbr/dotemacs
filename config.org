@@ -410,12 +410,6 @@ Joins next line onto current one, like vim's 'shift+j'
                   (interactive)
                   (join-line -1)))
 #+end_src
-** Rainbow
-Useful for editing themes and CSS
-http://julien.danjou.info/rainbow-mode.html
-#+begin_src emacs-lisp
-(require 'rainbow-mode)
-#+end_src
 ** IBuffer
 http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
 *** Bind to C-x C-b
@@ -524,18 +518,6 @@ Original M-x bound to C-c C-c M-x:
 (global-set-key (kbd "C-c M-x") 'execute-extended-command)
 #+end_src
 
-** escreen
-http://blog.nguyenvq.com/2011/03/07/escreen-instead-of-elscreen-for-screen-like-features-in-emacs/
-*** Load
-#+begin_src emacs-lisp
-(load "escreen")
-(escreen-install)
-#+end_src
-*** Bind prefix to C-z
-#+begin_src emacs-lisp
-(setq escreen-prefix-char "\C-z")
-(global-set-key escreen-prefix-char 'escreen-prefix)
-#+end_src
 ** uniqify buffer names
 http://tsengf.blogspot.com/2011/06/distinguish-buffers-of-same-filename-in.html
 #+begin_src emacs-lisp
@@ -702,11 +684,6 @@ http://stackoverflow.com/a/16986889/745
 #+begin_src emacs-lisp
 (setq enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
-#+end_src
-** god-mode
-#+begin_src emacs-lisp
-(require 'god-mode)
-(global-set-key (kbd "<escape>") 'god-mode-all)
 #+end_src
 ** rust-mode
 Restore this
