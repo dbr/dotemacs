@@ -191,7 +191,6 @@ melpa repo and workaround for TLS weirdness
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
 
 ; Weirdness required for Debian? also required 'apt install gnutls-bin'
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
