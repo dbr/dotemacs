@@ -580,14 +580,6 @@ F5 toggles showing trailing whitespace
                   (setq show-trailing-whitespace (not show-trailing-whitespace))
                   (redraw-display)))
 #+end_src
-** markdown-mode
-http://jblevins.org/projects/markdown-mode/
-#+begin_src emacs-lisp
-(autoload 'markdown-mode "markdown-mode.el"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-#+end_src
 ** stripe-buffer
 Alternating line-colours in dired
 https://github.com/sabof/stripe-buffer
