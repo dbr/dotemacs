@@ -725,6 +725,18 @@ F5 toggles showing trailing whitespace
                   (setq show-trailing-whitespace (not show-trailing-whitespace))
                   (redraw-display)))
 #+end_src
+** lsp config
+#+begin_src emacs-lisp
+; Disable docs popup from cursor - gets in way of code
+(set 'lsp-ui-doc-show-with-cursor nil)
+; Disable symbol highlighting - interrupts keyboard shortcuts sometimes
+(setq lsp-enable-symbol-highlighting nil)
+; Hide actions in modeline, never use them
+(setq lsp-modeline-code-actions-enable nil)
+(setq lsp-rust-server 'rust-analyzer)
+
+(setq lsp-enable-snippet nil)
+#+end_src
 * Host specific changes
 Relative to this file,
 
