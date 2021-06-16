@@ -195,38 +195,6 @@ melpa repo and workaround for TLS weirdness
 ; Weirdness required for Debian? also required 'apt install gnutls-bin'
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+end_src
-* Filesystem navigation
-** Use ido for shinier minibuf (C-x b and C-x C-f)
-#+begin_src emacs-lisp
-(ido-mode 1)
-#+end_src
-
-** Ignore files in ido
-Ignore .DS_Store and .pyc when finding files
-
-#+begin_src emacs-lisp
-(add-to-list 'ido-ignore-files "\\.DS_Store")
-(add-to-list 'ido-ignore-files "\\.pyc")
-#+end_src
-
-
-Also OS X "Icon" file: http://stackoverflow.com/q/9053161/745
-
-#+begin_src emacs-lisp
-(add-to-list 'ido-ignore-files "Icon\n")
-#+end_src
-** Prevent ido searching for locations
-Disable auto searching for files unless called explicitly, prevents
-finding files in random directories automatically
-
-#+begin_src emacs-lisp
-(setq ido-auto-merge-delay-time 99999)
-
-(define-key ido-file-dir-completion-map (kbd "C-c C-s")
-  (lambda()
-    (interactive)
-    (ido-initiate-auto-merge (current-buffer))))
-#+end_src
 * org-mode config
 ** Enable shift-selection in org
 #+begin_src emacs-lisp
@@ -704,6 +672,32 @@ F5 toggles showing trailing whitespace
 (setq lsp-rust-server 'rust-analyzer)
 
 (setq lsp-enable-snippet nil)
+#+end_src
+** Filesystem navigation with IDO
+*** Use ido for shinier minibuf (C-x b and C-x C-f)
+#+begin_src emacs-lisp
+(ido-mode 1)
+#+end_src
+*** Ignore files in ido
+Ignore .DS_Store and .pyc when finding files
+Also OS X "Icon" file: http://stackoverflow.com/q/9053161/745
+
+#+begin_src emacs-lisp
+(add-to-list 'ido-ignore-files "\\.DS_Store")
+(add-to-list 'ido-ignore-files "\\.pyc")
+(add-to-list 'ido-ignore-files "Icon\n")
+#+end_src
+*** Prevent ido searching for locations
+Disable auto searching for files unless called explicitly, prevents
+finding files in random directories automatically
+
+#+begin_src emacs-lisp
+(setq ido-auto-merge-delay-time 99999)
+
+(define-key ido-file-dir-completion-map (kbd "C-c C-s")
+  (lambda()
+    (interactive)
+    (ido-initiate-auto-merge (current-buffer))))
 #+end_src
 * Host specific changes
 Relative to this file,
