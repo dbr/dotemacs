@@ -612,14 +612,6 @@ F5 toggles showing trailing whitespace
                   (setq show-trailing-whitespace (not show-trailing-whitespace))
                   (redraw-display)))
 #+end_src
-** git-blame
-#+begin_src emacs-lisp
-(require 'git-blame)
-#+end_src
-*** Show hash and start of commit message
-#+begin_src emacs-lisp
-(setq git-blame-prefix-format "%h %.10s:")
-#+end_src
 ** markdown-mode
 http://jblevins.org/projects/markdown-mode/
 #+begin_src emacs-lisp
