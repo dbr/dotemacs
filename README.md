@@ -23,8 +23,13 @@ To enable customiations live, it's easiest to use `eval-last-sexp`
 
 ## External modules
 
-As a convention in the `config.org` in the original repository, I've
-kept 3rd-party code in `ext/`
+Most third-party packages are in stalled via `package-install` and
+committed to this repo.
+
+There are updated via `M-x list packages` then press `U` to mark
+available updates for install, then perform the install with `x`.
+
+Things which cannot be installed this way live in the `ext/` folder.
 
 Singular `.el` live in the root of `ext/`, e.g:
 
