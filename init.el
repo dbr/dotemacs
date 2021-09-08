@@ -35,7 +35,7 @@
  '(custom-safe-themes
    '("3924f4d0cb873915a09cea3bdba3d378bb5fc575564b4c30093e18286ec4f395" "4f5bb895d88b6fe6a983e63429f154b8d939b4a8c581956493783b2515e22d6d" default))
  '(package-selected-packages
-   '(lsp-treemacs highlight-parentheses flycheck company lsp-ui lsp-mode stripe-buffer cmake-mode yaml-mode rust-mode magit)))
+   '(lsp-treemacs lsp-ui lsp-mode highlight-parentheses flycheck company stripe-buffer cmake-mode yaml-mode rust-mode magit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
