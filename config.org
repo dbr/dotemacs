@@ -661,8 +661,13 @@ F5 toggles showing trailing whitespace
 (setq lsp-enable-symbol-highlighting nil)
 ; Hide actions in modeline, never use them
 (setq lsp-modeline-code-actions-enable nil)
+; Show more than 1 line of error, so Rust "mistmatched type" errors are usable
+(setq lsp-ui-sideline-diagnostic-max-lines 3)
+
+; Use RA not Rust's lsp-mode
 (setq lsp-rust-server 'rust-analyzer)
 
+; Disable snippet thing, for reasons I can't recall
 (setq lsp-enable-snippet nil)
 #+end_src
 ** Filesystem navigation with IDO
