@@ -17,6 +17,13 @@ Avoids jumping half-a-screen when cursor reaches buttom of screen
 #+begin_src emacs-lisp
 (setq scroll-conservatively 10000)
 #+end_src
+
+Scrolling with C-v/M-v preserves cursor position
+#+begin_src emacs-lisp
+(require 'golden-ratio-scroll-screen)
+(global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
+(global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
+#+end_src
 ** Default tab settings
 Don't indent with tabs, and make tab-width 4 just-in-case (mainly for untabify)
 
